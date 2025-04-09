@@ -1,0 +1,87 @@
+
+import React from 'react';
+import { Button } from "@/components/ui/button";
+import { MessageSquare, Instagram, Calendar } from "lucide-react";
+
+const Hero = () => {
+  return (
+    <section className="py-16 lg:py-24 overflow-hidden relative hero-gradient">
+      <div className="container mx-auto px-6 md:px-8 lg:px-12">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          {/* Left content */}
+          <div className="flex-1">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+              Turn Instagram DMs into Course Sales
+              <span className="gradient-text">—Automatically.</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 mb-8">
+              Let our AI audit your profile, reply to DMs, and book sales calls while you sleep.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" asChild className="text-lg">
+                <a href="#trial">Start Free Trial</a>
+              </Button>
+              <Button size="lg" variant="outline" asChild className="text-lg">
+                <a href="#demo">Watch Demo</a>
+              </Button>
+            </div>
+          </div>
+          
+          {/* Right content - Floating Messages */}
+          <div className="flex-1 relative">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-radial from-brand-purple/10 to-transparent rounded-full opacity-30"></div>
+            
+            {/* Instagram DM */}
+            <div className="bg-white rounded-xl shadow-lg p-4 mb-4 max-w-xs animate-float">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-8 h-8 rounded-full bg-instagram-gradient"></div>
+                <div>
+                  <p className="text-sm font-medium">potential_student</p>
+                  <p className="text-xs text-gray-500">via Instagram</p>
+                </div>
+              </div>
+              <p className="text-sm mb-2">Hey, I saw your course. How does it work?</p>
+              <div className="flex justify-end">
+                <Instagram size={16} className="text-brand-pink" />
+              </div>
+            </div>
+            
+            {/* AI Response */}
+            <div className="bg-gray-100 rounded-xl shadow-lg p-4 mb-4 ml-12 max-w-xs animate-float" style={{ animationDelay: "1s" }}>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-brand-purple to-brand-blue flex items-center justify-center text-white">
+                  <span className="text-xs font-bold">AI</span>
+                </div>
+                <div>
+                  <p className="text-sm font-medium">Your AI Assistant</p>
+                  <p className="text-xs text-gray-500">Automated Response</p>
+                </div>
+              </div>
+              <p className="text-sm mb-2">Thanks for your interest! Our 8-week program helps you master digital marketing. Would you like to schedule a call to learn more?</p>
+              <div className="flex justify-end">
+                <MessageSquare size={16} className="text-brand-purple" />
+              </div>
+            </div>
+            
+            {/* Calendar Booking */}
+            <div className="bg-white rounded-xl shadow-lg p-4 ml-6 max-w-xs animate-float" style={{ animationDelay: "2s" }}>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-brand-blue to-brand-purple"></div>
+                <div>
+                  <p className="text-sm font-medium">Calendar Booking</p>
+                  <p className="text-xs text-gray-500">Sales Call</p>
+                </div>
+              </div>
+              <p className="text-sm mb-2">Sales call with potential_student scheduled for tomorrow at 2:00 PM</p>
+              <div className="flex justify-end">
+                <Calendar size={16} className="text-brand-blue" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;
