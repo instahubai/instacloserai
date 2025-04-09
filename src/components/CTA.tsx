@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, Calendar, X } from 'lucide-react';
@@ -94,7 +93,7 @@ const CTA = () => {
               <X size={24} />
             </button>
             <iframe
-              src="https://calendly.com/instacloser-ai/demo"
+              src="https://calendly.com/YOUR_USERNAME/YOUR_EVENT_TYPE"
               width="100%"
               height="100%"
               frameBorder="0"
