@@ -64,7 +64,7 @@ const CTA = () => {
           </div>
           
           <p className="text-sm text-gray-500">
-            Questions? Contact us at support@dmtocourse.com
+            Questions? Contact us at support@instacloser.ai
           </p>
         </div>
       </div>
