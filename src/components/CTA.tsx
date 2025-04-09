@@ -1,9 +1,19 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Calendar, X } from 'lucide-react';
 
 const CTA = () => {
+  const [showCalendly, setShowCalendly] = useState(false);
+
+  const openCalendly = () => {
+    setShowCalendly(true);
+  };
+
+  const closeCalendly = () => {
+    setShowCalendly(false);
+  };
+
   return (
     <section id="trial" className="py-16 lg:py-24 relative overflow-hidden">
       <div className="absolute inset-0 hero-gradient opacity-50"></div>
@@ -33,13 +43,17 @@ const CTA = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Button size="lg" asChild className="text-lg px-8">
-                <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" asChild className="text-lg px-8" onClick={openCalendly}>
+                <a href="#" className="flex items-center gap-2">
+                  <Calendar size={18} />
                   Start Free Trial
                 </a>
               </Button>
-              <Button size="lg" variant="outline" asChild className="text-lg">
-                <a href="#demo">Schedule Demo</a>
+              <Button size="lg" variant="outline" onClick={openCalendly} className="text-lg">
+                <span className="flex items-center gap-2">
+                  <Calendar size={18} />
+                  Schedule Demo
+                </span>
               </Button>
             </div>
             
@@ -68,6 +82,28 @@ const CTA = () => {
           </p>
         </div>
       </div>
+
+      {/* Calendly Modal */}
+      {showCalendly && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl h-[80vh] relative">
+            <button 
+              onClick={closeCalendly}
+              className="absolute right-4 top-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10"
+            >
+              <X size={24} />
+            </button>
+            <iframe
+              src="https://calendly.com/instacloser-ai/demo"
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              title="Schedule your free consultation"
+              className="rounded-xl"
+            ></iframe>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
