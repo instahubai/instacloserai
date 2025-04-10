@@ -8,6 +8,7 @@ import Testimonials from '@/components/Testimonials';
 import IntegrationOptions from '@/components/IntegrationOptions';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
+import ChatBot from '@/components/ChatBot';
 
 const Index = () => {
   return (
@@ -22,6 +23,7 @@ const Index = () => {
         <CTA />
       </main>
       <Footer />
+      <ChatBot />
     </div>
   );
 };
