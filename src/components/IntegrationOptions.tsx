@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { PayPal, Zap } from 'lucide-react';
+import { CreditCard, Zap } from 'lucide-react';
 import { toast } from "sonner";
 
 const IntegrationOptions = () => {
@@ -66,7 +66,7 @@ const IntegrationOptions = () => {
             {/* PayPal Integration */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="flex items-center gap-2 mb-4">
-                <PayPal className="text-blue-600" size={24} />
+                <CreditCard className="text-blue-600" size={24} />
                 <h3 className="text-xl font-semibold">PayPal Payments</h3>
               </div>
               <p className="text-gray-600 mb-4">
@@ -76,7 +76,7 @@ const IntegrationOptions = () => {
                 onClick={handlePayPalCheckout}
                 className="w-full bg-blue-600 hover:bg-blue-700"
               >
-                <PayPal size={16} className="mr-2" />
+                <CreditCard size={16} className="mr-2" />
                 Pay with PayPal
               </Button>
             </div>
