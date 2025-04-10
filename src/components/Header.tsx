@@ -49,7 +49,7 @@ const Header = () => {
               <X size={24} />
             </button>
             <iframe
-              src="https://calendly.com/instacloser-ai/demo"
+              src="https://calendly.com/ledefiantones"
               width="100%"
               height="100%"
               frameBorder="0"
