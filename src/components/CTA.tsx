@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, Calendar, X } from 'lucide-react';
 
@@ -7,12 +6,19 @@ const CTA = () => {
   const [showCalendly, setShowCalendly] = useState(false);
 
   const openCalendly = () => {
+    console.log("Opening Calendly modal from CTA section");
     setShowCalendly(true);
   };
 
   const closeCalendly = () => {
     setShowCalendly(false);
   };
+
+  useEffect(() => {
+    if (showCalendly) {
+      console.log("Calendly modal is now showing in CTA section");
+    }
+  }, [showCalendly]);
 
   return (
     <section id="trial" className="py-16 lg:py-24 relative overflow-hidden">
@@ -100,6 +106,7 @@ const CTA = () => {
               frameBorder="0"
               title="Schedule your free consultation"
               className="rounded-xl"
+              onLoad={() => console.log("Calendly iframe loaded in CTA")}
             ></iframe>
           </div>
         </div>

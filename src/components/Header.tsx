@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Calendar, X } from 'lucide-react';
 
@@ -7,12 +6,19 @@ const Header = () => {
   const [showCalendly, setShowCalendly] = useState(false);
 
   const openCalendly = () => {
+    console.log("Opening Calendly modal");
     setShowCalendly(true);
   };
 
   const closeCalendly = () => {
     setShowCalendly(false);
   };
+
+  useEffect(() => {
+    if (showCalendly) {
+      console.log("Calendly modal is now showing");
+    }
+  }, [showCalendly]);
 
   return (
     <header className="w-full py-4 px-6 md:px-8 lg:px-12 border-b">
@@ -55,6 +61,7 @@ const Header = () => {
               frameBorder="0"
               title="Schedule your free consultation"
               className="rounded-xl"
+              onLoad={() => console.log("Calendly iframe loaded in Header")}
             ></iframe>
           </div>
         </div>
