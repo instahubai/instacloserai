@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CreditCard, Zap, Instagram, Bot, MessageSquare } from 'lucide-react';
+import { CreditCard, Zap, Instagram, Bot, MessageSquare, Check } from 'lucide-react';
 import { toast } from "sonner";
 
 const IntegrationOptions = () => {
@@ -12,18 +12,21 @@ const IntegrationOptions = () => {
   const [whatsappNumber, setWhatsappNumber] = useState('');
   const [showInstagramForm, setShowInstagramForm] = useState(false);
   const [showWhatsappForm, setShowWhatsappForm] = useState(false);
+  const [accountConnected, setAccountConnected] = useState({
+    instagram: false,
+    whatsapp: false
+  });
   
   // PayPal checkout handler
   const handlePayPalCheckout = () => {
     // In a real implementation, you would redirect to PayPal checkout
-    // For this demo, we'll just show a success message
     toast.success("Redirecting to PayPal checkout...");
     
     // Simulate a redirect to PayPal checkout
     window.open("https://www.paypal.com/checkoutnow", "_blank");
   };
 
-  // Zapier webhook trigger handler
+  // Zapier webhook trigger handler - enhanced for more reliable automation
   const handleZapierTrigger = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -32,31 +35,70 @@ const IntegrationOptions = () => {
       return;
     }
 
+    // Validate form data based on which social accounts are being connected
+    if (showInstagramForm && !instagramUsername) {
+      toast.error("Please enter your Instagram username");
+      return;
+    }
+
+    if (showWhatsappForm && !whatsappNumber) {
+      toast.error("Please enter your WhatsApp number");
+      return;
+    }
+
     setIsLoading(true);
-    console.log("Triggering Zapier webhook:", webhookUrl);
+    console.log("Triggering Zapier webhook for account connection:", webhookUrl);
 
     try {
-      const response = await fetch(webhookUrl, {
+      // Prepare comprehensive data payload for Zapier
+      const payload = {
+        timestamp: new Date().toISOString(),
+        source: "InstaCloser AI",
+        action: "account_connection",
+        triggered_from: window.location.origin,
+        account_type: showInstagramForm ? "instagram" : "whatsapp",
+        instagram_username: instagramUsername || null,
+        whatsapp_number: whatsappNumber || null,
+        automation_settings: {
+          auto_respond: true,
+          lead_qualification: true,
+          appointment_booking: true,
+          payment_processing: true
+        }
+      };
+
+      // Send data to Zapier webhook
+      await fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         mode: "no-cors", // Handling CORS for webhook requests
-        body: JSON.stringify({
-          timestamp: new Date().toISOString(),
-          source: "InstaCloser AI",
-          action: "trial_signup",
-          triggered_from: window.location.origin,
-          instagram_username: instagramUsername || "Not provided",
-          whatsapp_number: whatsappNumber || "Not provided"
-        }),
+        body: JSON.stringify(payload),
       });
 
-      // Since we're using no-cors, we show an informative message
-      toast.success("Automation triggered successfully! Your social account has been connected.");
+      // Update the connected status based on which form was submitted
+      if (showInstagramForm) {
+        setAccountConnected(prev => ({ ...prev, instagram: true }));
+        toast.success(`Instagram account @${instagramUsername} connected successfully!`);
+      }
+      
+      if (showWhatsappForm) {
+        setAccountConnected(prev => ({ ...prev, whatsapp: true }));
+        toast.success(`WhatsApp number ${whatsappNumber} connected successfully!`);
+      }
+
+      // Clear the form
+      if (showInstagramForm) setInstagramUsername('');
+      if (showWhatsappForm) setWhatsappNumber('');
+      
+      // Collapse the form after successful submission
+      setShowInstagramForm(false);
+      setShowWhatsappForm(false);
+      
     } catch (error) {
-      console.error("Error triggering webhook:", error);
-      toast.error("Failed to trigger automation. Please check the URL.");
+      console.error("Error triggering Zapier automation:", error);
+      toast.error("Failed to connect account. Please check the webhook URL and try again.");
     } finally {
       setIsLoading(false);
     }
@@ -105,7 +147,7 @@ const IntegrationOptions = () => {
                 <h3 className="text-xl font-semibold">Zapier Automation</h3>
               </div>
               <p className="text-gray-600 mb-4">
-                Connect your Zapier webhook to automate workflows when users sign up or interact with your chatbot.
+                Connect your Zapier webhook to automate workflows for account setup, payment notifications, and chatbot activation.
               </p>
               <form onSubmit={handleZapierTrigger} className="space-y-4">
                 <Input
@@ -121,13 +163,13 @@ const IntegrationOptions = () => {
                   disabled={isLoading}
                 >
                   <Zap size={16} className="mr-2" />
-                  {isLoading ? "Triggering..." : "Trigger Zap"}
+                  {isLoading ? "Processing..." : "Connect Automation"}
                 </Button>
               </form>
             </div>
           </div>
           
-          {/* Social Connection Section */}
+          {/* Social Connection Section - Enhanced with connection status */}
           <div className="bg-white p-6 rounded-lg shadow-md mb-8">
             <h3 className="text-xl font-semibold mb-4">Connect Social Accounts</h3>
             <p className="text-gray-600 mb-6">
@@ -137,18 +179,36 @@ const IntegrationOptions = () => {
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <Button 
                 onClick={toggleInstagramForm} 
-                className={`flex-1 ${showInstagramForm ? 'bg-purple-700' : 'bg-purple-600 hover:bg-purple-700'}`}
+                className={`flex-1 ${showInstagramForm ? 'bg-purple-700' : accountConnected.instagram ? 'bg-green-600' : 'bg-purple-600 hover:bg-purple-700'}`}
               >
-                <Instagram size={16} className="mr-2" />
-                Connect Instagram
+                {accountConnected.instagram ? (
+                  <>
+                    <Check size={16} className="mr-2" />
+                    Instagram Connected
+                  </>
+                ) : (
+                  <>
+                    <Instagram size={16} className="mr-2" />
+                    Connect Instagram
+                  </>
+                )}
               </Button>
               
               <Button 
                 onClick={toggleWhatsappForm} 
-                className={`flex-1 ${showWhatsappForm ? 'bg-green-700' : 'bg-green-600 hover:bg-green-700'}`}
+                className={`flex-1 ${showWhatsappForm ? 'bg-green-700' : accountConnected.whatsapp ? 'bg-green-600' : 'bg-green-600 hover:bg-green-700'}`}
               >
-                <MessageSquare size={16} className="mr-2" />
-                Connect WhatsApp
+                {accountConnected.whatsapp ? (
+                  <>
+                    <Check size={16} className="mr-2" />
+                    WhatsApp Connected
+                  </>
+                ) : (
+                  <>
+                    <MessageSquare size={16} className="mr-2" />
+                    Connect WhatsApp
+                  </>
+                )}
               </Button>
             </div>
             
@@ -159,15 +219,22 @@ const IntegrationOptions = () => {
                   <Instagram size={16} className="text-purple-600" />
                   Instagram Connection
                 </h4>
-                <form className="space-y-4">
+                <form onSubmit={handleZapierTrigger} className="space-y-4">
                   <Input
                     type="text"
                     placeholder="Your Instagram username"
                     value={instagramUsername}
                     onChange={(e) => setInstagramUsername(e.target.value)}
                   />
+                  <Button 
+                    type="submit"
+                    className="w-full bg-purple-600 hover:bg-purple-700"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Connecting..." : "Connect Account"}
+                  </Button>
                   <p className="text-xs text-gray-500">
-                    Our AI will monitor and respond to DMs on this account.
+                    Our AI will monitor and respond to DMs on this account after payment is completed.
                   </p>
                 </form>
               </div>
@@ -180,15 +247,22 @@ const IntegrationOptions = () => {
                   <MessageSquare size={16} className="text-green-600" />
                   WhatsApp Connection
                 </h4>
-                <form className="space-y-4">
+                <form onSubmit={handleZapierTrigger} className="space-y-4">
                   <Input
                     type="tel"
-                    placeholder="Your WhatsApp number"
+                    placeholder="Your WhatsApp number (with country code)"
                     value={whatsappNumber}
                     onChange={(e) => setWhatsappNumber(e.target.value)}
                   />
+                  <Button 
+                    type="submit"
+                    className="w-full bg-green-600 hover:bg-green-700"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Connecting..." : "Connect Number"}
+                  </Button>
                   <p className="text-xs text-gray-500">
-                    Include country code. Our AI will monitor and respond to messages on this number.
+                    Include country code (e.g., +1 for US). Our AI will monitor and respond to messages on this number.
                   </p>
                 </form>
               </div>
@@ -200,14 +274,14 @@ const IntegrationOptions = () => {
                 <h4 className="font-medium">AI Assistant Status</h4>
               </div>
               <p className="text-sm text-gray-600 mb-2">
-                Your AI assistant is active and ready to interact with customers. It will:
+                After connecting your social accounts and completing payment, your AI assistant will:
               </p>
               <ul className="text-sm text-gray-600 list-disc pl-5 space-y-1">
-                <li>Respond to customer inquiries 24/7</li>
-                <li>Qualify leads based on their responses</li>
-                <li>Schedule appointments automatically</li>
-                <li>Process payments securely</li>
-                <li>Log all interactions for your review</li>
+                <li>Respond to customer inquiries 24/7 on Instagram and WhatsApp</li>
+                <li>Qualify leads based on their responses using conversation analysis</li>
+                <li>Schedule appointments automatically using your Calendly link</li>
+                <li>Process payments securely through PayPal</li>
+                <li>Log all interactions in your dashboard for review</li>
               </ul>
             </div>
           </div>

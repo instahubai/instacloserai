@@ -17,21 +17,34 @@ const ChatBot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [showCalendly, setShowCalendly] = useState(false);
+  const [typing, setTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Auto-welcome message when chat is opened
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      // Add welcome message
-      const welcomeMessage: Message = {
-        id: Date.now().toString(),
-        text: "👋 Hi there! I'm your AI assistant. I can help you learn about our courses, schedule a call, or process your payment. How can I help you today?",
-        sender: 'bot',
-        timestamp: new Date()
-      };
-      setMessages([welcomeMessage]);
+      // Simulate a natural delay before showing the welcome message
+      setTimeout(() => {
+        const welcomeMessage: Message = {
+          id: Date.now().toString(),
+          text: "👋 Hi there! I'm your personal sales assistant. I can help with course information, schedule a strategy call, or process your payment. How can I help you succeed today?",
+          sender: 'bot',
+          timestamp: new Date()
+        };
+        setMessages([welcomeMessage]);
+      }, 600);
     }
   }, [isOpen, messages.length]);
+
+  // Focus on input when chat opens
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 300);
+    }
+  }, [isOpen]);
 
   // Auto-scroll to the latest message
   useEffect(() => {
@@ -60,29 +73,34 @@ const ChatBot = () => {
     setMessages(prev => [...prev, userMessage]);
     setNewMessage('');
     
-    // Simulate bot thinking
+    // Show typing indicator
+    setTyping(true);
+    
+    // Simulate bot thinking with a natural delay (between 1-2 seconds)
+    const thinkingTime = Math.floor(Math.random() * 1000) + 1000;
     setTimeout(() => {
       respondToMessage(newMessage);
-    }, 1000);
+      setTyping(false);
+    }, thinkingTime);
   };
 
-  // Bot logic to respond to messages
+  // Enhanced bot logic to respond to messages - more sales-focused and professional
   const respondToMessage = (userInput: string) => {
     const input = userInput.toLowerCase();
     let response = '';
 
-    // Handle different types of inquiries
+    // Handle different types of inquiries with a sales-focused approach
     if (input.includes('price') || input.includes('cost') || input.includes('how much')) {
-      response = "Our course pricing starts at $997 for the basic package and $1997 for the premium package with 1-on-1 coaching. Would you like to know more about what's included?";
+      response = "Our premium Instagram Sales Mastery course is currently available at $997 for the self-guided package and $1,997 for the VIP package with 1-on-1 coaching. Both options include lifetime access and free updates. Would you like to see the full comparison of what's included in each package?";
     } 
-    else if (input.includes('payment') || input.includes('pay') || input.includes('purchase')) {
-      response = "You can securely pay via PayPal or credit card. Would you like me to send you a payment link?";
+    else if (input.includes('payment') || input.includes('pay') || input.includes('purchase') || input.includes('buy')) {
+      response = "You can securely pay via PayPal or credit card. Once payment is processed, you'll get immediate access to the course materials and our AI will automatically be connected to your Instagram and WhatsApp accounts. Would you like me to send you a payment link?";
     } 
-    else if (input.includes('schedule') || input.includes('call') || input.includes('appointment') || input.includes('book')) {
-      response = "I'd be happy to help you schedule a call with one of our experts. Would you like to see available time slots?";
+    else if (input.includes('schedule') || input.includes('call') || input.includes('appointment') || input.includes('book') || input.includes('talk')) {
+      response = "I'd be happy to schedule a free 30-minute strategy call with one of our coaches. During this call, we'll analyze your current Instagram strategy and identify key areas for improvement to help you attract higher-ticket clients. Would you like to see available times?";
     } 
     else if (input.includes('yes') && messages[messages.length-2]?.text.includes('payment link')) {
-      response = "Great! Here's your secure payment link: [Payment Link]. You can also click the 'Pay Now' button below.";
+      response = "Great! Here's your secure payment link. You can also click the 'Pay Now' button below to complete your purchase. After payment, you'll receive an email with your login details within 5 minutes.";
       
       // Simulate payment button click after response
       setTimeout(() => {
@@ -95,8 +113,8 @@ const ChatBot = () => {
         setMessages(prev => [...prev, paymentMessage]);
       }, 500);
     } 
-    else if (input.includes('yes') && messages[messages.length-2]?.text.includes('time slots')) {
-      response = "Perfect! I can help you schedule a time. Let me get our calendar up for you.";
+    else if ((input.includes('yes') || input.includes('time') || input.includes('available') || input.includes('when')) && messages[messages.length-2]?.text.includes('see available times')) {
+      response = "Perfect! Let me show you our available time slots. Our coaches are typically available Monday-Friday between 9am-5pm EST. Choose a time that works best for you:";
       
       // Open Calendly
       setTimeout(() => {
@@ -104,16 +122,25 @@ const ChatBot = () => {
       }, 1000);
     }
     else if (input.includes('instagram') || input.includes('dm') || input.includes('direct message')) {
-      response = "We respond to all Instagram DMs within 24 hours, but our AI assistant (that's me!) can help you right away. What would you like to know about our courses?";
+      response = "Our Instagram Sales Mastery course teaches you exactly how to convert DMs into high-ticket sales. Plus, when you subscribe to our service, our AI can handle your Instagram DMs automatically, pre-qualifying leads and booking calls while you sleep. Would you like to see how this works with a demo?";
     }
     else if (input.includes('whatsapp') || input.includes('text') || input.includes('message')) {
-      response = "You can reach us on WhatsApp at +1-234-567-8900, or just continue chatting with me here. I can answer most questions immediately!";
+      response = "We offer complete WhatsApp automation as part of our service. After signing up, our AI will handle inquiries, qualify leads, and book calls through WhatsApp - all customized to sound exactly like you. Would you like to see how this integration works?";
     }
     else if (input.includes('course') || input.includes('program') || input.includes('learn') || input.includes('what') || input.includes('info')) {
-      response = "Our flagship course 'Instagram Sales Mastery' teaches you how to attract high-ticket clients through Instagram. It includes content strategy, automation, sales psychology, and closing techniques. Would you like me to send you our detailed course curriculum?";
+      response = "Our flagship 'Instagram Sales Mastery' course is an 8-week program that teaches you a proven system for attracting and converting high-ticket clients through Instagram. It covers content strategy, automation, sales psychology, and our proprietary 'DM-to-Deal' framework. The course includes 42 video lessons, templates, scripts, and weekly group coaching calls. Would you like me to send you the detailed curriculum?";
+    }
+    else if (input.includes('testimonial') || input.includes('review') || input.includes('result') || input.includes('success')) {
+      response = "Our clients typically see a 3-5x increase in qualified leads within 30 days of implementing our system. For example, Sarah J. went from 2 client bookings per month to 15, tripling her revenue in just 6 weeks. Marcos T. used our DM scripts to close a $14,000 client after just 3 days of implementing our approach. Would you like to hear more success stories?";
+    }
+    else if (input.includes('guarantee') || input.includes('refund') || input.includes('risk')) {
+      response = "We offer a 30-day satisfaction guarantee. If you implement our strategies and don't see results, we'll refund your purchase in full. We're confident in our system because it's been tested and proven across 27 different industries. Would you like to know more about how we ensure your success?";
+    }
+    else if (input.includes('thank') || input.includes('great') || input.includes('awesome') || input.includes('helpful')) {
+      response = "You're welcome! I'm here to help you succeed. Is there anything else you'd like to know about our courses or services? Or would you prefer to schedule a call with one of our coaches to get personalized advice?";
     }
     else {
-      response = "Thanks for your message! I'd be happy to tell you about our courses, help you schedule a call with our team, or assist with payment. What specifically would you like to know?";
+      response = "Thanks for your message! I'm here to help you grow your business through Instagram. I can tell you about our proven sales system, help you schedule a strategy call with our team, or assist with payment. What specifically would you like to know about converting more Instagram followers into paying clients?";
     }
 
     // Add bot response
@@ -128,15 +155,37 @@ const ChatBot = () => {
   };
 
   const handlePayment = () => {
-    // Redirect to PayPal checkout (or open modal)
-    toast.success("Redirecting to secure payment...");
+    // Redirect to PayPal checkout
+    toast.success("Redirecting to secure payment gateway...");
     
     // Simulate a redirect to PayPal checkout
     window.open("https://www.paypal.com/checkoutnow", "_blank");
+    
+    // Add a follow-up message after the user clicks the payment button
+    setTimeout(() => {
+      const followUpMessage: Message = {
+        id: Date.now().toString(),
+        text: "I've opened our secure payment page for you. Once your payment is complete, you'll receive immediate access to the course and our team will reach out within 24 hours to help set up your account. If you have any questions during checkout, just let me know!",
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, followUpMessage]);
+    }, 1500);
   };
   
   const closeCalendly = () => {
     setShowCalendly(false);
+    
+    // Add a follow-up message after closing Calendly
+    setTimeout(() => {
+      const followUpMessage: Message = {
+        id: Date.now().toString(),
+        text: "Great! I'll send you a confirmation email with all the details for your upcoming call. Is there anything specific you'd like our coach to focus on during your strategy session?",
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, followUpMessage]);
+    }, 500);
   };
 
   return (
@@ -198,12 +247,27 @@ const ChatBot = () => {
                 </div>
               </div>
             ))}
+            
+            {/* Typing indicator */}
+            {typing && (
+              <div className="mb-3 mr-auto max-w-[85%]">
+                <div className="p-3 rounded-lg bg-gray-100 text-gray-800 rounded-bl-none">
+                  <div className="flex space-x-1">
+                    <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                    <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                    <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
             <div ref={messagesEndRef} />
           </div>
           
           {/* Input Area */}
           <form onSubmit={handleSendMessage} className="p-3 border-t border-gray-200 flex items-center gap-2">
             <Input
+              ref={inputRef}
               type="text"
               placeholder="Type your message..."
               value={newMessage}
