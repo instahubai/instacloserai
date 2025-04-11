@@ -16,13 +16,21 @@ const IntegrationOptions = () => {
     whatsapp: false
   });
   
-  // PayPal checkout handler
+  // PayPal checkout handler with merchant ID
   const handlePayPalCheckout = () => {
-    // In a real implementation, you would redirect to PayPal checkout
+    const merchantId = "Af5oSuMKMMZ_LcoBRPMzXir5xWU1C8jm-asrSJfmseajXWC86GFVo_NXr-zm5Au6SSx95KlupTU36gWJ";
+    const recipientEmail = "ledefiantones@gmail.com";
+    const amount = "97.00";
+    const currency = "USD";
+    const description = "Instagram Sales AI Assistant - Monthly Subscription (100 clients)";
+    
     toast.success("Redirecting to PayPal checkout...");
     
-    // Simulate a redirect to PayPal checkout
-    window.open("https://www.paypal.com/checkoutnow", "_blank");
+    // Create PayPal checkout URL with merchant ID
+    const paypalCheckoutUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${recipientEmail}&item_name=${encodeURIComponent(description)}&amount=${amount}&currency_code=${currency}&a3=${amount}&p3=1&t3=M&src=1&no_shipping=1&no_note=1&bn=PP-BuyNowBF&charset=UTF-8&custom=${merchantId}`;
+    
+    // Redirect to PayPal checkout
+    window.open(paypalCheckoutUrl, "_blank");
   };
 
   // Social account connection handler
@@ -95,15 +103,18 @@ const IntegrationOptions = () => {
                 <h3 className="text-xl font-semibold">PayPal Payments</h3>
               </div>
               <p className="text-gray-600 mb-4">
-                Accept payments easily with PayPal integration. Quick and secure checkout process.
+                Subscribe to our AI assistant service for $97/month. Handles up to 100 clients automatically through Instagram and WhatsApp.
               </p>
               <Button 
                 onClick={handlePayPalCheckout}
                 className="w-full bg-blue-600 hover:bg-blue-700"
               >
                 <CreditCard size={16} className="mr-2" />
-                Pay with PayPal
+                Subscribe with PayPal - $97/month
               </Button>
+              <p className="text-xs text-gray-500 mt-2 text-center">
+                Secure payment processed by PayPal. Cancel anytime.
+              </p>
             </div>
           </div>
           
@@ -220,6 +231,7 @@ const IntegrationOptions = () => {
                 <li>Schedule appointments automatically using your Calendly link</li>
                 <li>Process payments securely through PayPal</li>
                 <li>Log all interactions in your dashboard for review</li>
+                <li>Handle up to 100 clients per month with your subscription</li>
               </ul>
             </div>
           </div>
