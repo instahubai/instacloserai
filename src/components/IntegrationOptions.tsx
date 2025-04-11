@@ -2,11 +2,10 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CreditCard, Zap, Instagram, Bot, MessageSquare, Check } from 'lucide-react';
+import { CreditCard, Instagram, Bot, MessageSquare, Check } from 'lucide-react';
 import { toast } from "sonner";
 
 const IntegrationOptions = () => {
-  const [webhookUrl, setWebhookUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [instagramUsername, setInstagramUsername] = useState('');
   const [whatsappNumber, setWhatsappNumber] = useState('');
@@ -26,15 +25,10 @@ const IntegrationOptions = () => {
     window.open("https://www.paypal.com/checkoutnow", "_blank");
   };
 
-  // Zapier webhook trigger handler - enhanced for more reliable automation
-  const handleZapierTrigger = async (e: React.FormEvent) => {
+  // Social account connection handler
+  const handleAccountConnection = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!webhookUrl) {
-      toast.error("Please enter your Zapier webhook URL");
-      return;
-    }
-
     // Validate form data based on which social accounts are being connected
     if (showInstagramForm && !instagramUsername) {
       toast.error("Please enter your Instagram username");
@@ -47,36 +41,8 @@ const IntegrationOptions = () => {
     }
 
     setIsLoading(true);
-    console.log("Triggering Zapier webhook for account connection:", webhookUrl);
-
+    
     try {
-      // Prepare comprehensive data payload for Zapier
-      const payload = {
-        timestamp: new Date().toISOString(),
-        source: "InstaCloser AI",
-        action: "account_connection",
-        triggered_from: window.location.origin,
-        account_type: showInstagramForm ? "instagram" : "whatsapp",
-        instagram_username: instagramUsername || null,
-        whatsapp_number: whatsappNumber || null,
-        automation_settings: {
-          auto_respond: true,
-          lead_qualification: true,
-          appointment_booking: true,
-          payment_processing: true
-        }
-      };
-
-      // Send data to Zapier webhook
-      await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "no-cors", // Handling CORS for webhook requests
-        body: JSON.stringify(payload),
-      });
-
       // Update the connected status based on which form was submitted
       if (showInstagramForm) {
         setAccountConnected(prev => ({ ...prev, instagram: true }));
@@ -97,8 +63,8 @@ const IntegrationOptions = () => {
       setShowWhatsappForm(false);
       
     } catch (error) {
-      console.error("Error triggering Zapier automation:", error);
-      toast.error("Failed to connect account. Please check the webhook URL and try again.");
+      console.error("Error connecting account:", error);
+      toast.error("Failed to connect account. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -121,7 +87,7 @@ const IntegrationOptions = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-center">Integration Options</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+          <div className="mb-10">
             {/* PayPal Integration */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="flex items-center gap-2 mb-4">
@@ -138,34 +104,6 @@ const IntegrationOptions = () => {
                 <CreditCard size={16} className="mr-2" />
                 Pay with PayPal
               </Button>
-            </div>
-            
-            {/* Zapier Integration */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="flex items-center gap-2 mb-4">
-                <Zap className="text-orange-500" size={24} />
-                <h3 className="text-xl font-semibold">Zapier Automation</h3>
-              </div>
-              <p className="text-gray-600 mb-4">
-                Connect your Zapier webhook to automate workflows for account setup, payment notifications, and chatbot activation.
-              </p>
-              <form onSubmit={handleZapierTrigger} className="space-y-4">
-                <Input
-                  type="url"
-                  placeholder="Enter your Zapier webhook URL"
-                  value={webhookUrl}
-                  onChange={(e) => setWebhookUrl(e.target.value)}
-                  className="w-full"
-                />
-                <Button 
-                  type="submit" 
-                  className="w-full bg-orange-500 hover:bg-orange-600"
-                  disabled={isLoading}
-                >
-                  <Zap size={16} className="mr-2" />
-                  {isLoading ? "Processing..." : "Connect Automation"}
-                </Button>
-              </form>
             </div>
           </div>
           
@@ -219,7 +157,7 @@ const IntegrationOptions = () => {
                   <Instagram size={16} className="text-purple-600" />
                   Instagram Connection
                 </h4>
-                <form onSubmit={handleZapierTrigger} className="space-y-4">
+                <form onSubmit={handleAccountConnection} className="space-y-4">
                   <Input
                     type="text"
                     placeholder="Your Instagram username"
@@ -247,7 +185,7 @@ const IntegrationOptions = () => {
                   <MessageSquare size={16} className="text-green-600" />
                   WhatsApp Connection
                 </h4>
-                <form onSubmit={handleZapierTrigger} className="space-y-4">
+                <form onSubmit={handleAccountConnection} className="space-y-4">
                   <Input
                     type="tel"
                     placeholder="Your WhatsApp number (with country code)"
