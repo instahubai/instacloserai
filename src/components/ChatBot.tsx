@@ -99,7 +99,7 @@ const ChatBot = () => {
     else if (input.includes('schedule') || input.includes('call') || input.includes('appointment') || input.includes('book') || input.includes('talk')) {
       response = "I'd be happy to schedule a free 30-minute strategy call with one of our coaches. During this call, we'll analyze your current Instagram strategy and identify key areas for improvement to help you attract higher-ticket clients. Would you like to see available times?";
     } 
-    else if (input.includes('yes') && messages[messages.length-2]?.text.includes('payment link')) {
+    else if (input.includes('yes') && messages.length > 0 && messages[messages.length-1]?.text.includes('payment link')) {
       response = "Great! Here's your secure payment link. You can also click the 'Pay Now' button below to complete your purchase. After payment, you'll receive an email with your login details within 5 minutes.";
       
       // Simulate payment button click after response
@@ -113,7 +113,7 @@ const ChatBot = () => {
         setMessages(prev => [...prev, paymentMessage]);
       }, 500);
     } 
-    else if ((input.includes('yes') || input.includes('time') || input.includes('available') || input.includes('when')) && messages[messages.length-2]?.text.includes('see available times')) {
+    else if ((input.includes('yes') || input.includes('time') || input.includes('available') || input.includes('when')) && messages.length > 0 && messages[messages.length-1]?.text.includes('see available times')) {
       response = "Perfect! Let me show you our available time slots. Our coaches are typically available Monday-Friday between 9am-5pm EST. Choose a time that works best for you:";
       
       // Open Calendly
@@ -157,9 +157,23 @@ const ChatBot = () => {
   const handlePayment = () => {
     // Redirect to PayPal checkout
     toast.success("Redirecting to secure payment gateway...");
+
+    const merchantId = "Af5oSuMKMMZ_LcoBRPMzXir5xWU1C8jm-asrSJfmseajXWC86GFVo_NXr-zm5Au6SSx95KlupTU36gWJ";
+    const recipientEmail = "ledefiantones@gmail.com";
+    const amount = "97.00";
+    const currency = "USD";
+    const description = "Instagram Sales AI Assistant - Monthly Subscription (100 clients)";
     
-    // Simulate a redirect to PayPal checkout
-    window.open("https://www.paypal.com/checkoutnow", "_blank");
+    try {
+      // Create PayPal checkout URL with merchant ID
+      const paypalCheckoutUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick-subscriptions&business=${encodeURIComponent(recipientEmail)}&item_name=${encodeURIComponent(description)}&a3=${amount}&p3=1&t3=M&src=1&no_shipping=1&no_note=1&currency_code=${currency}&bn=PP-SubscriptionsBF&custom=${merchantId}`;
+      
+      // Redirect to PayPal checkout
+      window.open(paypalCheckoutUrl, "_blank");
+    } catch (error) {
+      toast.error("Failed to open PayPal checkout. Please try again.");
+      console.error("PayPal checkout error:", error);
+    }
     
     // Add a follow-up message after the user clicks the payment button
     setTimeout(() => {

@@ -26,11 +26,16 @@ const IntegrationOptions = () => {
     
     toast.success("Redirecting to PayPal checkout...");
     
-    // Create PayPal checkout URL with merchant ID
-    const paypalCheckoutUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${recipientEmail}&item_name=${encodeURIComponent(description)}&amount=${amount}&currency_code=${currency}&a3=${amount}&p3=1&t3=M&src=1&no_shipping=1&no_note=1&bn=PP-BuyNowBF&charset=UTF-8&custom=${merchantId}`;
-    
-    // Redirect to PayPal checkout
-    window.open(paypalCheckoutUrl, "_blank");
+    try {
+      // Create PayPal checkout URL with merchant ID
+      const paypalCheckoutUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick-subscriptions&business=${encodeURIComponent(recipientEmail)}&item_name=${encodeURIComponent(description)}&a3=${amount}&p3=1&t3=M&src=1&no_shipping=1&no_note=1&currency_code=${currency}&bn=PP-SubscriptionsBF&custom=${merchantId}`;
+      
+      // Redirect to PayPal checkout
+      window.open(paypalCheckoutUrl, "_blank");
+    } catch (error) {
+      toast.error("Failed to open PayPal checkout. Please try again.");
+      console.error("PayPal checkout error:", error);
+    }
   };
 
   // Social account connection handler
@@ -90,7 +95,7 @@ const IntegrationOptions = () => {
   };
 
   return (
-    <section className="py-12 bg-gray-50">
+    <section className="py-12 bg-gray-50" id="integration-options">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-center">Integration Options</h2>
