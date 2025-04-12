@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Calendar, X, Menu } from 'lucide-react';
@@ -48,6 +47,7 @@ const Header = () => {
           <a href="#features" className="text-sm font-medium hover:text-primary transition-colors">Features</a>
           <a href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">How It Works</a>
           <a href="#testimonials" className="text-sm font-medium hover:text-primary transition-colors">Testimonials</a>
+          <a href="https://www.instagram.com/instacloserai" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-primary transition-colors">Follow Us</a>
           <Button onClick={openCalendly} className="flex items-center gap-2 bg-primary hover:bg-primary/90">
             <Calendar size={16} />
             <span>Start Free Trial</span>
@@ -55,7 +55,6 @@ const Header = () => {
         </nav>
       </div>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 bg-black/50 z-50">
           <div className="bg-white h-screen w-[80%] max-w-sm p-6 flex flex-col">
@@ -73,27 +72,10 @@ const Header = () => {
               </Button>
             </div>
             <nav className="flex flex-col gap-6">
-              <a 
-                href="#features" 
-                className="text-lg font-medium hover:text-primary transition-colors" 
-                onClick={toggleMobileMenu}
-              >
-                Features
-              </a>
-              <a 
-                href="#how-it-works" 
-                className="text-lg font-medium hover:text-primary transition-colors"
-                onClick={toggleMobileMenu}
-              >
-                How It Works
-              </a>
-              <a 
-                href="#testimonials" 
-                className="text-lg font-medium hover:text-primary transition-colors"
-                onClick={toggleMobileMenu}
-              >
-                Testimonials
-              </a>
+              <a href="#features" className="text-lg font-medium hover:text-primary transition-colors" onClick={toggleMobileMenu}>Features</a>
+              <a href="#how-it-works" className="text-lg font-medium hover:text-primary transition-colors" onClick={toggleMobileMenu}>How It Works</a>
+              <a href="#testimonials" className="text-lg font-medium hover:text-primary transition-colors" onClick={toggleMobileMenu}>Testimonials</a>
+              <a href="https://www.instagram.com/instacloserai" target="_blank" rel="noopener noreferrer" className="text-lg font-medium hover:text-primary transition-colors" onClick={toggleMobileMenu}>Follow Us</a>
               <Button onClick={() => { openCalendly(); toggleMobileMenu(); }} className="mt-4 w-full">
                 <Calendar size={16} className="mr-2" />
                 <span>Start Free Trial</span>
@@ -103,7 +85,6 @@ const Header = () => {
         </div>
       )}
 
-      {/* Calendly Modal */}
       {showCalendly && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl h-[80vh] relative">

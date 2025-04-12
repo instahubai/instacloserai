@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Instagram, Twitter, Facebook, Mail } from 'lucide-react';
 
@@ -20,7 +19,7 @@ const Footer = () => {
               Automating Instagram DMs to course sales with the power of AI.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-gray-400 hover:text-brand-teal transition-colors">
+              <a href="https://www.instagram.com/instacloserai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-teal transition-colors">
                 <Instagram size={20} />
               </a>
               <a href="#" className="text-gray-400 hover:text-brand-teal transition-colors">
