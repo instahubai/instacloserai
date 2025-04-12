@@ -29,7 +29,7 @@ const TestimonialCard = ({ quote, author, role, stars }: TestimonialProps) => {
 const Testimonials = () => {
   const testimonials = [
     {
-      quote: "I used to spend 3 hours a day manually responding to DMs. With DMtoCourse, my assistant handles it all, and my course sales have increased by 32%.",
+      quote: "I used to spend 3 hours a day manually responding to DMs. With InstaCloserAI, my assistant handles it all, and my course sales have increased by 32%.",
       author: "Sarah Johnson",
       role: "Digital Marketing Instructor",
       stars: 5
@@ -54,7 +54,7 @@ const Testimonials = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Customers Say</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Course creators just like you are growing their businesses with DMtoCourse.
+            Course creators just like you are growing their businesses with InstaCloserAI.
           </p>
         </div>
         
