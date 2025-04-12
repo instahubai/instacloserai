@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, Calendar, X } from 'lucide-react';
+import { CheckCircle2, Calendar, X, Shield, Lock } from 'lucide-react';
 
 const CTA = () => {
   const [showCalendly, setShowCalendly] = useState(false);
@@ -25,7 +26,7 @@ const CTA = () => {
       <div className="absolute inset-0 hero-gradient opacity-50"></div>
       <div className="container mx-auto px-6 md:px-8 lg:px-12 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-extrabold mb-6">
             Ready to Automate Your Instagram Sales?
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -39,52 +40,59 @@ const CTA = () => {
                 <p className="text-gray-600">Average increase in response rate</p>
               </div>
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-brand-blue mb-2">24/7</h3>
+                <h3 className="text-2xl font-bold text-brand-teal mb-2">24/7</h3>
                 <p className="text-gray-600">Always-on lead qualification</p>
               </div>
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-brand-pink mb-2">15+</h3>
+                <h3 className="text-2xl font-bold text-brand-purple mb-2">15+</h3>
                 <p className="text-gray-600">Hours saved per week</p>
               </div>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Button size="lg" asChild className="text-lg px-8" onClick={openCalendly}>
-                <a href="#" className="flex items-center gap-2">
-                  <Calendar size={18} />
-                  Start Free Trial
-                </a>
+              <Button size="lg" className="text-lg px-8 bg-brand-purple hover:bg-brand-purple/90" onClick={openCalendly}>
+                <Calendar size={18} className="mr-2" />
+                Start Free Trial
               </Button>
-              <Button size="lg" variant="outline" onClick={openCalendly} className="text-lg">
-                <span className="flex items-center gap-2">
-                  <Calendar size={18} />
-                  Schedule Demo
-                </span>
+              <Button size="lg" variant="outline" onClick={openCalendly} className="text-lg border-brand-teal text-brand-teal hover:bg-brand-teal/10">
+                <Calendar size={18} className="mr-2" />
+                Schedule Demo
               </Button>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-lg mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto">
               <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-green-500" />
+                <CheckCircle2 size={20} className="text-green-500" />
                 <span className="text-sm">14-day free trial</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-green-500" />
+                <CheckCircle2 size={20} className="text-green-500" />
                 <span className="text-sm">No credit card required</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-green-500" />
+                <CheckCircle2 size={20} className="text-green-500" />
                 <span className="text-sm">Cancel anytime</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-green-500" />
+                <CheckCircle2 size={20} className="text-green-500" />
                 <span className="text-sm">Full support included</span>
+              </div>
+            </div>
+            
+            <div className="mt-6 pt-6 border-t border-gray-100 flex justify-center gap-8">
+              <div className="flex items-center gap-2">
+                <Lock size={16} className="text-brand-purple" />
+                <span className="text-xs text-gray-500">Secure Payment</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Shield size={16} className="text-brand-purple" />
+                <span className="text-xs text-gray-500">Data Protection</span>
               </div>
             </div>
           </div>
           
           <p className="text-sm text-gray-500">
-            Questions? Contact us at support@instacloser.ai
+            Questions? Contact us at <a href="mailto:support@instacloser.ai" className="text-brand-purple hover:underline">support@instacloser.ai</a>
           </p>
         </div>
       </div>

@@ -64,10 +64,9 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				brand: {
-					purple: '#4F46E5',
-					blue: '#38BDF8',
-					pink: '#EC4899',
-					orange: '#F97316'
+					purple: '#6d54ce',
+					teal: '#2ec5b3',
+					dark: '#111111'
 				}
 			},
 			borderRadius: {
@@ -118,6 +117,10 @@ export default {
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'instagram-gradient': 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
+			},
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+				heading: ['Poppins', 'sans-serif']
 			}
 		}
 	},
