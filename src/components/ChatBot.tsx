@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { MessageSquare, X } from 'lucide-react';
+import { MessageSquare, X, Instagram } from 'lucide-react';
 import { toast } from "sonner";
 import { Message } from '@/types/chat';
 import ChatWindow from './chat/ChatWindow';
@@ -14,12 +14,19 @@ const ChatBot = () => {
   const [showCalendly, setShowCalendly] = useState(false);
   const [typing, setTyping] = useState(false);
   const [ownerNumber, setOwnerNumber] = useState<string | null>(null);
+  const [ownerInstagram, setOwnerInstagram] = useState<string | null>(null);
 
-  // Load owner's WhatsApp number if available
+  // Load owner's account details if available
   useEffect(() => {
     const savedOwnerNumber = localStorage.getItem('ownerWhatsappNumber');
+    const savedInstagramAccount = localStorage.getItem('ownerInstagramAccount');
+    
     if (savedOwnerNumber) {
       setOwnerNumber(savedOwnerNumber);
+    }
+    
+    if (savedInstagramAccount) {
+      setOwnerInstagram(savedInstagramAccount);
     }
   }, []);
 
@@ -30,14 +37,23 @@ const ChatBot = () => {
       setTimeout(() => {
         const welcomeMessage: Message = {
           id: Date.now().toString(),
-          text: "👋 Hi there! I'm your personal sales assistant. I can help with course information, schedule a strategy call, or process your payment. How can I help you succeed today?",
+          text: "👋 Welcome to InstaCloser AI! I'm your personal sales assistant. I'm here to help you grow your business through Instagram and close more high-ticket clients. How can I assist you today?",
           sender: 'bot',
           timestamp: new Date()
         };
         setMessages([welcomeMessage]);
+        
+        // If owner's accounts are connected, simulate sending the welcome message
+        if (ownerNumber) {
+          simulateWhatsAppMessage(welcomeMessage.text);
+        }
+        
+        if (ownerInstagram) {
+          simulateInstagramMessage(welcomeMessage.text);
+        }
       }, 600);
     }
-  }, [isOpen, messages.length]);
+  }, [isOpen, messages.length, ownerNumber, ownerInstagram]);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -86,9 +102,13 @@ const ChatBot = () => {
     // Handle special cases that require additional actions
     const input = userInput.toLowerCase();
     
-    // If owner's WhatsApp is connected, simulate sending the message to WhatsApp
+    // If owner's accounts are connected, simulate sending the message
     if (ownerNumber) {
       simulateWhatsAppMessage(botMessage.text);
+    }
+    
+    if (ownerInstagram) {
+      simulateInstagramMessage(botMessage.text);
     }
     
     if (input.includes('yes') && messages.length > 0 && messages[messages.length-1]?.text.includes('payment link')) {
@@ -102,9 +122,13 @@ const ChatBot = () => {
         };
         setMessages(prev => [...prev, paymentMessage]);
         
-        // If owner's WhatsApp is connected, simulate sending the payment request
+        // If owner's accounts are connected, simulate sending the payment request
         if (ownerNumber) {
           simulateWhatsAppMessage("Here's your payment link: [Payment Button]");
+        }
+        
+        if (ownerInstagram) {
+          simulateInstagramMessage("Here's your payment link: [Payment Button]");
         }
       }, 500);
     } 
@@ -122,13 +146,28 @@ const ChatBot = () => {
     
     // Log the message and show a toast notification for testing purposes
     console.log(`[WhatsApp Test] Message to ${ownerNumber}: ${text}`);
-    toast.info(`Test: Message would be sent to WhatsApp (${ownerNumber})`, {
+    toast.info(`Test: Message to WhatsApp (${ownerNumber})`, {
       description: text.substring(0, 50) + (text.length > 50 ? '...' : ''),
       duration: 3000,
     });
     
     // In a real implementation, this would connect to the WhatsApp Business API
     // to send an actual message to the owner's number
+  };
+  
+  // Simulate sending a message to the owner's Instagram
+  const simulateInstagramMessage = (text: string) => {
+    if (!ownerInstagram) return;
+    
+    // Log the message and show a toast notification for testing purposes
+    console.log(`[Instagram Test] Message to @${ownerInstagram}: ${text}`);
+    toast.info(`Test: Message to Instagram (@${ownerInstagram})`, {
+      description: text.substring(0, 50) + (text.length > 50 ? '...' : ''),
+      duration: 3000,
+    });
+    
+    // In a real implementation, this would connect to the Instagram Graph API
+    // to send an actual DM to the owner's account
   };
 
   const handlePayment = () => {
@@ -168,9 +207,13 @@ const ChatBot = () => {
       };
       setMessages(prev => [...prev, followUpMessage]);
       
-      // If owner's WhatsApp is connected, simulate sending the follow-up message
+      // If owner's accounts are connected, simulate sending the follow-up message
       if (ownerNumber) {
         simulateWhatsAppMessage(followUpMessage.text);
+      }
+      
+      if (ownerInstagram) {
+        simulateInstagramMessage(followUpMessage.text);
       }
     }, 1500);
   };
@@ -188,9 +231,13 @@ const ChatBot = () => {
       };
       setMessages(prev => [...prev, followUpMessage]);
       
-      // If owner's WhatsApp is connected, simulate sending the follow-up message
+      // If owner's accounts are connected, simulate sending the follow-up message
       if (ownerNumber) {
         simulateWhatsAppMessage(followUpMessage.text);
+      }
+      
+      if (ownerInstagram) {
+        simulateInstagramMessage(followUpMessage.text);
       }
     }, 500);
   };
@@ -221,12 +268,22 @@ const ChatBot = () => {
         closeCalendly={closeCalendly}
       />
 
-      {/* Show test mode indicator when owner's WhatsApp is connected */}
-      {ownerNumber && (
-        <div className="fixed bottom-24 right-6 bg-green-100 border border-green-300 rounded-md p-2 text-xs text-green-800 z-30">
-          WhatsApp Test Mode Active
-        </div>
-      )}
+      {/* Show test mode indicators when owner's accounts are connected */}
+      <div className="fixed bottom-24 right-6 space-y-2 z-30">
+        {ownerNumber && (
+          <div className="bg-green-100 border border-green-300 rounded-md p-2 text-xs text-green-800 flex items-center gap-1">
+            <MessageSquare size={12} />
+            WhatsApp Test Mode
+          </div>
+        )}
+        
+        {ownerInstagram && (
+          <div className="bg-purple-100 border border-purple-300 rounded-md p-2 text-xs text-purple-800 flex items-center gap-1">
+            <Instagram size={12} />
+            Instagram Test Mode
+          </div>
+        )}
+      </div>
     </>
   );
 };

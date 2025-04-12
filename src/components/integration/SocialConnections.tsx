@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Instagram, MessageSquare, Check } from 'lucide-react';
@@ -17,8 +17,23 @@ const SocialConnections = () => {
     whatsapp: false
   });
 
-  // Owner's WhatsApp number for testing
-  const ownerNumber = '+61426306095';
+  // Owner's account details for testing
+  const ownerNumber = '+61485970998';
+  const ownerInstagram = 'instacloserai';
+  
+  // Check for existing connections on component mount
+  useEffect(() => {
+    const savedOwnerNumber = localStorage.getItem('ownerWhatsappNumber');
+    const savedInstagramAccount = localStorage.getItem('ownerInstagramAccount');
+    
+    if (savedOwnerNumber) {
+      setAccountConnected(prev => ({ ...prev, whatsapp: true }));
+    }
+    
+    if (savedInstagramAccount) {
+      setAccountConnected(prev => ({ ...prev, instagram: true }));
+    }
+  }, []);
 
   // Social account connection handler
   const handleAccountConnection = async (e: React.FormEvent) => {
@@ -40,22 +55,37 @@ const SocialConnections = () => {
     try {
       // Update the connected status based on which form was submitted
       if (showInstagramForm) {
-        setAccountConnected(prev => ({ ...prev, instagram: true }));
-        toast.success(`Instagram account @${instagramUsername} connected successfully!`);
+        // Special handling for owner's Instagram
+        if (instagramUsername === ownerInstagram || instagramUsername.toLowerCase() === ownerInstagram.toLowerCase()) {
+          setAccountConnected(prev => ({ ...prev, instagram: true }));
+          toast.success(`Owner's Instagram account @${ownerInstagram} connected for testing!`);
+          
+          // Save the owner's Instagram in localStorage for the ChatBot to use
+          localStorage.setItem('ownerInstagramAccount', ownerInstagram);
+          
+          // Show a special notification for the test mode
+          setTimeout(() => {
+            toast.info("Instagram test mode activated! The AI will simulate responding to DMs on the owner's account.");
+          }, 1000);
+        } else {
+          setAccountConnected(prev => ({ ...prev, instagram: true }));
+          toast.success(`Instagram account @${instagramUsername} connected successfully!`);
+          localStorage.setItem('connectedInstagramAccount', instagramUsername);
+        }
       }
       
       if (showWhatsappForm) {
         // Special handling for owner's number
         if (whatsappNumber === ownerNumber || whatsappNumber === ownerNumber.replace('+', '')) {
           setAccountConnected(prev => ({ ...prev, whatsapp: true }));
-          toast.success(`Owner's WhatsApp number connected for testing! Messages will be sent here.`);
+          toast.success(`Owner's business WhatsApp number connected for testing! Messages will be sent here.`);
           
           // Save the owner's number in localStorage for the ChatBot to use
           localStorage.setItem('ownerWhatsappNumber', ownerNumber);
           
           // Show a special notification for the test mode
           setTimeout(() => {
-            toast.info("Test mode activated! All messages will be directed to the owner's WhatsApp number.");
+            toast.info("WhatsApp test mode activated! All messages will be directed to the owner's business WhatsApp number.");
           }, 1000);
         } else {
           setAccountConnected(prev => ({ ...prev, whatsapp: true }));
@@ -156,7 +186,7 @@ const SocialConnections = () => {
               {isLoading ? "Connecting..." : "Connect Account"}
             </Button>
             <p className="text-xs text-gray-500">
-              Our AI will monitor and respond to DMs on this account after payment is completed.
+              For testing, use the owner's Instagram username: instacloserai
             </p>
           </form>
         </div>
@@ -184,7 +214,7 @@ const SocialConnections = () => {
               {isLoading ? "Connecting..." : "Connect Number"}
             </Button>
             <p className="text-xs text-gray-500">
-              Include country code (e.g., +61 for Australia). Owner's number (+61426306095) will enable test mode.
+              For testing, use the owner's business number: +61485970998
             </p>
           </form>
         </div>

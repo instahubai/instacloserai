@@ -5,4 +5,5 @@ export interface Message {
   sender: 'user' | 'bot';
   timestamp: Date;
   recipient?: string; // Optional field to specify where the message should be sent
+  platform?: 'whatsapp' | 'instagram' | 'web'; // Optional field to specify the platform
 }
