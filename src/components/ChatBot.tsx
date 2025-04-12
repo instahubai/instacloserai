@@ -13,6 +13,15 @@ const ChatBot = () => {
   const [newMessage, setNewMessage] = useState('');
   const [showCalendly, setShowCalendly] = useState(false);
   const [typing, setTyping] = useState(false);
+  const [ownerNumber, setOwnerNumber] = useState<string | null>(null);
+
+  // Load owner's WhatsApp number if available
+  useEffect(() => {
+    const savedOwnerNumber = localStorage.getItem('ownerWhatsappNumber');
+    if (savedOwnerNumber) {
+      setOwnerNumber(savedOwnerNumber);
+    }
+  }, []);
 
   // Auto-welcome message when chat is opened
   useEffect(() => {
@@ -77,6 +86,11 @@ const ChatBot = () => {
     // Handle special cases that require additional actions
     const input = userInput.toLowerCase();
     
+    // If owner's WhatsApp is connected, simulate sending the message to WhatsApp
+    if (ownerNumber) {
+      simulateWhatsAppMessage(botMessage.text);
+    }
+    
     if (input.includes('yes') && messages.length > 0 && messages[messages.length-1]?.text.includes('payment link')) {
       // Add payment button message
       setTimeout(() => {
@@ -87,6 +101,11 @@ const ChatBot = () => {
           timestamp: new Date()
         };
         setMessages(prev => [...prev, paymentMessage]);
+        
+        // If owner's WhatsApp is connected, simulate sending the payment request
+        if (ownerNumber) {
+          simulateWhatsAppMessage("Here's your payment link: [Payment Button]");
+        }
       }, 500);
     } 
     else if ((input.includes('yes') || input.includes('time') || input.includes('available') || input.includes('when')) && messages.length > 0 && messages[messages.length-1]?.text.includes('see available times')) {
@@ -95,6 +114,21 @@ const ChatBot = () => {
         setShowCalendly(true);
       }, 1000);
     }
+  };
+
+  // Simulate sending a message to the owner's WhatsApp
+  const simulateWhatsAppMessage = (text: string) => {
+    if (!ownerNumber) return;
+    
+    // Log the message and show a toast notification for testing purposes
+    console.log(`[WhatsApp Test] Message to ${ownerNumber}: ${text}`);
+    toast.info(`Test: Message would be sent to WhatsApp (${ownerNumber})`, {
+      description: text.substring(0, 50) + (text.length > 50 ? '...' : ''),
+      duration: 3000,
+    });
+    
+    // In a real implementation, this would connect to the WhatsApp Business API
+    // to send an actual message to the owner's number
   };
 
   const handlePayment = () => {
@@ -133,6 +167,11 @@ const ChatBot = () => {
         timestamp: new Date()
       };
       setMessages(prev => [...prev, followUpMessage]);
+      
+      // If owner's WhatsApp is connected, simulate sending the follow-up message
+      if (ownerNumber) {
+        simulateWhatsAppMessage(followUpMessage.text);
+      }
     }, 1500);
   };
   
@@ -148,6 +187,11 @@ const ChatBot = () => {
         timestamp: new Date()
       };
       setMessages(prev => [...prev, followUpMessage]);
+      
+      // If owner's WhatsApp is connected, simulate sending the follow-up message
+      if (ownerNumber) {
+        simulateWhatsAppMessage(followUpMessage.text);
+      }
     }, 500);
   };
 
@@ -176,6 +220,13 @@ const ChatBot = () => {
         showCalendly={showCalendly}
         closeCalendly={closeCalendly}
       />
+
+      {/* Show test mode indicator when owner's WhatsApp is connected */}
+      {ownerNumber && (
+        <div className="fixed bottom-24 right-6 bg-green-100 border border-green-300 rounded-md p-2 text-xs text-green-800 z-30">
+          WhatsApp Test Mode Active
+        </div>
+      )}
     </>
   );
 };

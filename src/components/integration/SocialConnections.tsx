@@ -17,6 +17,9 @@ const SocialConnections = () => {
     whatsapp: false
   });
 
+  // Owner's WhatsApp number for testing
+  const ownerNumber = '+61426306095';
+
   // Social account connection handler
   const handleAccountConnection = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,8 +45,23 @@ const SocialConnections = () => {
       }
       
       if (showWhatsappForm) {
-        setAccountConnected(prev => ({ ...prev, whatsapp: true }));
-        toast.success(`WhatsApp number ${whatsappNumber} connected successfully!`);
+        // Special handling for owner's number
+        if (whatsappNumber === ownerNumber || whatsappNumber === ownerNumber.replace('+', '')) {
+          setAccountConnected(prev => ({ ...prev, whatsapp: true }));
+          toast.success(`Owner's WhatsApp number connected for testing! Messages will be sent here.`);
+          
+          // Save the owner's number in localStorage for the ChatBot to use
+          localStorage.setItem('ownerWhatsappNumber', ownerNumber);
+          
+          // Show a special notification for the test mode
+          setTimeout(() => {
+            toast.info("Test mode activated! All messages will be directed to the owner's WhatsApp number.");
+          }, 1000);
+        } else {
+          setAccountConnected(prev => ({ ...prev, whatsapp: true }));
+          toast.success(`WhatsApp number ${whatsappNumber} connected successfully!`);
+          localStorage.setItem('connectedWhatsappNumber', whatsappNumber);
+        }
       }
 
       // Clear the form
@@ -166,7 +184,7 @@ const SocialConnections = () => {
               {isLoading ? "Connecting..." : "Connect Number"}
             </Button>
             <p className="text-xs text-gray-500">
-              Include country code (e.g., +1 for US). Our AI will monitor and respond to messages on this number.
+              Include country code (e.g., +61 for Australia). Owner's number (+61426306095) will enable test mode.
             </p>
           </form>
         </div>
