@@ -37,7 +37,7 @@ const ChatBot = () => {
       setTimeout(() => {
         const welcomeMessage: Message = {
           id: Date.now().toString(),
-          text: "👋 Welcome to InstaCloser AI! I'm your personal sales assistant. I'm here to help you grow your business through Instagram and close more high-ticket clients. How can I assist you today?",
+          text: "👋 Welcome to InstaCloserAI! I'm your personal sales assistant. I'm here to help you grow your business through Instagram, TikTok, Facebook, and WhatsApp to close more high-ticket clients. How can I assist you today?",
           sender: 'bot',
           timestamp: new Date()
         };
@@ -172,11 +172,11 @@ const ChatBot = () => {
 
   const handlePayment = () => {
     // Redirect to PayPal checkout
-    toast.success("Redirecting to secure payment gateway...");
+    toast.success("Redirecting to secure connection...");
 
     const merchantId = "Af5oSuMKMMZ_LcoBRPMzXir5xWU1C8jm-asrSJfmseajXWC86GFVo_NXr-zm5Au6SSx95KlupTU36gWJ";
     const recipientEmail = "ledefiantones@gmail.com";
-    const amount = "97.00";
+    const amount = "0.00"; // Removed specific price
     const currency = "USD";
     const description = "Instagram Sales AI Assistant - Monthly Subscription (100 clients)";
     
@@ -193,15 +193,15 @@ const ChatBot = () => {
       // Redirect to PayPal checkout
       window.open(paypalCheckoutUrl, "_blank");
     } catch (error) {
-      toast.error("Failed to open PayPal checkout. Please try again.");
-      console.error("PayPal checkout error:", error);
+      toast.error("Failed to open PayPal connection. Please try again.");
+      console.error("PayPal connection error:", error);
     }
     
     // Add a follow-up message after the user clicks the payment button
     setTimeout(() => {
       const followUpMessage: Message = {
         id: Date.now().toString(),
-        text: "I've opened our secure payment page for you. Once your payment is complete, you'll receive immediate access to the course and our team will reach out within 24 hours to help set up your account. If you have any questions during checkout, just let me know!",
+        text: "I've opened our secure connection page for you. Once your account is connected, you'll receive immediate access to our platform and our team will reach out within 24 hours to help set everything up. If you have any questions during the process, just let me know!",
         sender: 'bot',
         timestamp: new Date()
       };

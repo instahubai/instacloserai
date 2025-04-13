@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Instagram, Twitter, Facebook, Mail } from 'lucide-react';
+import { Instagram, Twitter, Facebook, Mail, Tiktok } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -13,7 +14,7 @@ const Footer = () => {
                 alt="InstaCloser AI Logo" 
                 className="w-8 h-8"
               />
-              <span className="font-heading font-bold text-lg">InstaCloser AI</span>
+              <span className="font-heading font-bold text-lg">InstaCloserAI</span>
             </div>
             <p className="text-gray-400 mb-4">
               Automating Instagram DMs to course sales with the power of AI.
@@ -22,13 +23,13 @@ const Footer = () => {
               <a href="https://www.instagram.com/instacloserai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-teal transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-brand-teal transition-colors">
-                <Twitter size={20} />
+              <a href="https://www.tiktok.com/@instacloserai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-teal transition-colors">
+                <Tiktok size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-brand-teal transition-colors">
+              <a href="https://www.facebook.com/instacloserai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-teal transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-brand-teal transition-colors">
+              <a href="mailto:contact@instacloserai.com" className="text-gray-400 hover:text-brand-teal transition-colors">
                 <Mail size={20} />
               </a>
             </div>
@@ -66,7 +67,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} InstaCloser AI. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} InstaCloserAI. All rights reserved.</p>
         </div>
       </div>
     </footer>
