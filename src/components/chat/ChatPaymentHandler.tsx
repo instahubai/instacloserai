@@ -1,70 +1,68 @@
 
-import { toast } from "sonner";
+import { useState } from 'react';
+import { toast } from 'sonner';
 import { Message } from '@/types/chat';
 import { createPayPalCheckoutUrl } from '@/utils/chatUtils';
 
-interface ChatPaymentHandlerProps {
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-  simulateWhatsAppMessage?: (text: string) => void;
-  simulateInstagramMessage?: (text: string) => void;
+interface UsePaymentHandlerProps {
+  messages?: Message[];
+  setMessages: (messages: Message[]) => void;
+  simulateWhatsAppMessage: (message: string) => void;
+  simulateInstagramMessage: (message: string) => void;
+  simulateTikTokMessage: (message: string) => void;
   ownerNumber: string | null;
   ownerInstagram: string | null;
+  ownerTikTok: string | null;
 }
 
 export const usePaymentHandler = ({
+  messages = [],
   setMessages,
   simulateWhatsAppMessage,
   simulateInstagramMessage,
+  simulateTikTokMessage,
   ownerNumber,
-  ownerInstagram
-}: ChatPaymentHandlerProps) => {
-  
-  const handlePayment = () => {
-    // Redirect to PayPal checkout
-    toast.success("Redirecting to secure connection...");
+  ownerInstagram,
+  ownerTikTok
+}: UsePaymentHandlerProps) => {
+  const [processing, setProcessing] = useState(false);
 
-    const merchantId = "Af5oSuMKMMZ_LcoBRPMzXir5xWU1C8jm-asrSJfmseajXWC86GFVo_NXr-zm5Au6SSx95KlupTU36gWJ";
-    const recipientEmail = "ledefiantones@gmail.com";
-    const amount = "0.00"; // Removed specific price
-    const currency = "USD";
-    const description = "Instagram Sales AI Assistant - Monthly Subscription (100 clients)";
+  const handlePayment = () => {
+    if (processing) return;
     
-    try {
-      // Create PayPal checkout URL with merchant ID
-      const paypalCheckoutUrl = createPayPalCheckoutUrl(
-        recipientEmail,
-        description,
-        amount,
-        currency,
-        merchantId
-      );
-      
-      // Redirect to PayPal checkout
-      window.open(paypalCheckoutUrl, "_blank");
-    } catch (error) {
-      toast.error("Failed to open PayPal connection. Please try again.");
-      console.error("PayPal connection error:", error);
-    }
+    setProcessing(true);
+    toast.loading("Processing payment...");
     
-    // Add a follow-up message after the user clicks the payment button
+    // Simulate payment processing
     setTimeout(() => {
-      const followUpMessage: Message = {
+      // Success toast
+      toast.success("Payment successful!");
+      
+      // Add confirmation message
+      const confirmationMessage: Message = {
         id: Date.now().toString(),
-        text: "I've opened our secure connection page for you. Once your account is connected, you'll receive immediate access to our platform and our team will reach out within 24 hours to help set everything up. If you have any questions during the process, just let me know!",
+        text: "Payment successful! You now have access to InstaCloserAI. We've sent a confirmation email with your login details. Your AI assistant is now active and ready to help you convert more leads across all your social platforms!",
         sender: 'bot',
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, followUpMessage]);
       
-      // If owner's accounts are connected, simulate sending the follow-up message
-      if (ownerNumber && simulateWhatsAppMessage) {
-        simulateWhatsAppMessage(followUpMessage.text);
+      setMessages([...messages, confirmationMessage]);
+      
+      // Simulate sending messages on connected platforms
+      if (ownerNumber) {
+        simulateWhatsAppMessage(confirmationMessage.text);
       }
       
-      if (ownerInstagram && simulateInstagramMessage) {
-        simulateInstagramMessage(followUpMessage.text);
+      if (ownerInstagram) {
+        simulateInstagramMessage(confirmationMessage.text);
       }
-    }, 1500);
+      
+      if (ownerTikTok) {
+        simulateTikTokMessage(confirmationMessage.text);
+      }
+      
+      setProcessing(false);
+    }, 2000);
   };
 
   return { handlePayment };

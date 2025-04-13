@@ -6,11 +6,15 @@ import { MessageSquare, X } from 'lucide-react';
 interface ChatButtonProps {
   isOpen: boolean;
   toggleChat: () => void;
+  displayBadge?: boolean; // Add optional prop for the TikTok badge
 }
 
-const ChatButton: React.FC<ChatButtonProps> = ({ isOpen, toggleChat }) => {
+const ChatButton: React.FC<ChatButtonProps> = ({ isOpen, toggleChat, displayBadge = false }) => {
   return (
     <div className="fixed bottom-6 right-6 z-40">
+      {displayBadge && (
+        <div className="absolute -top-2 -right-2 w-4 h-4 bg-pink-500 rounded-full border-2 border-white" />
+      )}
       <Button 
         onClick={toggleChat} 
         size="lg" 

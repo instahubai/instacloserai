@@ -10,10 +10,10 @@ export const respondToMessage = (userInput: string, messages: Message[]): string
     response = "Our Instagram Sales Mastery course includes everything you need to automate your Instagram DMs and convert followers into course sales. We offer flexible payment options. Would you like to speak with a member of our team to discuss pricing that fits your needs?";
   } 
   else if (input.includes('payment') || input.includes('pay') || input.includes('purchase') || input.includes('buy')) {
-    response = "You can securely connect via PayPal. Once your account is set up, you'll get immediate access to the course materials and our AI will automatically be connected to your Instagram and WhatsApp accounts. Would you like me to help you get started?";
+    response = "You can securely connect via PayPal. Once your account is set up, you'll get immediate access to the course materials and our AI will automatically be connected to your Instagram, TikTok, and WhatsApp accounts. Would you like me to help you get started?";
   } 
   else if (input.includes('schedule') || input.includes('call') || input.includes('appointment') || input.includes('book') || input.includes('talk')) {
-    response = "I'd be happy to schedule a free 30-minute strategy call with one of our coaches. During this call, we'll analyze your current Instagram strategy and identify key areas for improvement to help you attract higher-ticket clients. Would you like to see available times?";
+    response = "I'd be happy to schedule a free 30-minute strategy call with one of our coaches. During this call, we'll analyze your current social media strategy and identify key areas for improvement to help you attract higher-ticket clients. Would you like to see available times?";
   } 
   else if (input.includes('yes') && messages.length > 0 && messages[messages.length-1]?.text.includes('payment link')) {
     response = "Great! Here's your secure connection link. You can also click the button below to complete your setup. After connecting, you'll receive an email with your login details within 5 minutes.";
@@ -31,13 +31,13 @@ export const respondToMessage = (userInput: string, messages: Message[]): string
     response = "Yes! Our AI can also integrate with Facebook Messenger to engage with potential clients, answer questions, and book sales calls - all while maintaining your unique brand voice. Would you like to learn more about our Facebook integration?";
   }
   else if (input.includes('tiktok') || input.includes('tik tok')) {
-    response = "We've recently added TikTok messaging capabilities to our platform! Our AI can help convert TikTok followers into course sales by handling DMs, qualifying leads, and scheduling calls. Would you like to see how this works?";
+    response = "Our TikTok integration is now fully available! InstaCloserAI can handle TikTok DMs, respond to comments, and convert followers into customers automatically. The system identifies high-intent leads and nurtures them through your customized sales funnel. Would you like to see how our TikTok integration works?";
   }
   else if (input.includes('email') || input.includes('mail')) {
-    response = "Our platform includes email follow-up capabilities that work alongside our social media integrations. When a lead is qualified through Instagram or other channels, our system can automatically send personalized email sequences to nurture the relationship. Would you like to learn more about our email features?";
+    response = "Our platform includes email follow-up capabilities that work alongside our social media integrations. When a lead is qualified through Instagram, TikTok or other channels, our system can automatically send personalized email sequences to nurture the relationship. Would you like to learn more about our email features?";
   }
   else if (input.includes('course') || input.includes('program') || input.includes('learn') || input.includes('what') || input.includes('info')) {
-    response = "Our flagship 'Instagram Sales Mastery' course is an 8-week program that teaches you a proven system for attracting and converting high-ticket clients through Instagram. It covers content strategy, automation, sales psychology, and our proprietary 'DM-to-Deal' framework. The course includes 42 video lessons, templates, scripts, and weekly group coaching calls. Would you like me to send you the detailed curriculum?";
+    response = "Our flagship 'Instagram Sales Mastery' course is an 8-week program that teaches you a proven system for attracting and converting high-ticket clients through social media platforms including Instagram and TikTok. It covers content strategy, automation, sales psychology, and our proprietary 'DM-to-Deal' framework. The course includes 42 video lessons, templates, scripts, and weekly group coaching calls. Would you like me to send you the detailed curriculum?";
   }
   else if (input.includes('testimonial') || input.includes('review') || input.includes('result') || input.includes('success')) {
     response = "Our clients typically see a 3-5x increase in qualified leads within 30 days of implementing our system. For example, Sarah J. went from 2 client bookings per month to 15, tripling her revenue in just 6 weeks. Marcos T. used our DM scripts to close a $14,000 client after just 3 days of implementing our approach. Would you like to hear more success stories?";
@@ -49,7 +49,7 @@ export const respondToMessage = (userInput: string, messages: Message[]): string
     response = "You're welcome! I'm here to help you succeed with InstaCloserAI. Is there anything else you'd like to know about our courses or services? Or would you prefer to schedule a call with one of our coaches to get personalized advice?";
   }
   else {
-    response = "Thanks for your message! I'm here to help you grow your business with InstaCloserAI. I can tell you about our proven sales system, help you schedule a strategy call with our team, or assist with connecting your social accounts. What specifically would you like to know about converting more social media followers into paying clients?";
+    response = "Thanks for your message! I'm here to help you grow your business with InstaCloserAI. I can tell you about our proven sales system, help you schedule a strategy call with our team, or assist with connecting your social accounts including Instagram, WhatsApp, Facebook, and TikTok. What specifically would you like to know about converting more social media followers into paying clients?";
   }
 
   return response;

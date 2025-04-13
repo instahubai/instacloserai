@@ -47,11 +47,26 @@ const ChatWindow = ({
         <div className="px-4 py-3 bg-blue-600 text-white rounded-t-xl flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Bot size={20} />
-            <span className="font-medium">InstaCloser AI Assistant</span>
+            <span className="font-medium">InstaCloserAI Assistant</span>
           </div>
           <div className="flex items-center gap-1">
             <Instagram size={16} className="opacity-70" />
             <CreditCard size={16} className="opacity-70" />
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="16" 
+              height="16" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+              className="opacity-70"
+            >
+              <path d="M9 12a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+              <path d="M10 9a8 8 0 0 1 8 8h5a14 14 0 0 0-14-14v6"/>
+            </svg>
           </div>
         </div>
         

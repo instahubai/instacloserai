@@ -12,11 +12,13 @@ export const useChatState = () => {
   const [typing, setTyping] = useState(false);
   const [ownerNumber, setOwnerNumber] = useState<string | null>(null);
   const [ownerInstagram, setOwnerInstagram] = useState<string | null>(null);
+  const [ownerTikTok, setOwnerTikTok] = useState<string | null>(null);
 
   // Load owner's account details if available
   useEffect(() => {
     const savedOwnerNumber = localStorage.getItem('ownerWhatsappNumber');
     const savedInstagramAccount = localStorage.getItem('ownerInstagramAccount');
+    const savedTikTokAccount = localStorage.getItem('ownerTikTokAccount');
     
     if (savedOwnerNumber) {
       setOwnerNumber(savedOwnerNumber);
@@ -24,6 +26,10 @@ export const useChatState = () => {
     
     if (savedInstagramAccount) {
       setOwnerInstagram(savedInstagramAccount);
+    }
+    
+    if (savedTikTokAccount) {
+      setOwnerTikTok(savedTikTokAccount);
     }
   }, []);
 
@@ -48,9 +54,13 @@ export const useChatState = () => {
         if (ownerInstagram) {
           simulateInstagramMessage(welcomeMessage.text);
         }
+        
+        if (ownerTikTok) {
+          simulateTikTokMessage(welcomeMessage.text);
+        }
       }, 600);
     }
-  }, [isOpen, messages.length, ownerNumber, ownerInstagram]);
+  }, [isOpen, messages.length, ownerNumber, ownerInstagram, ownerTikTok]);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -108,6 +118,10 @@ export const useChatState = () => {
       simulateInstagramMessage(botMessage.text);
     }
     
+    if (ownerTikTok) {
+      simulateTikTokMessage(botMessage.text);
+    }
+    
     if (input.includes('yes') && messages.length > 0 && messages[messages.length-1]?.text.includes('payment link')) {
       // Add payment button message
       setTimeout(() => {
@@ -126,6 +140,10 @@ export const useChatState = () => {
         
         if (ownerInstagram) {
           simulateInstagramMessage("Here's your payment link: [Payment Button]");
+        }
+        
+        if (ownerTikTok) {
+          simulateTikTokMessage("Here's your payment link: [Payment Button]");
         }
       }, 500);
     } 
@@ -166,6 +184,22 @@ export const useChatState = () => {
     // In a real implementation, this would connect to the Instagram Graph API
     // to send an actual DM to the owner's account
   };
+  
+  // Simulate sending a message to the owner's TikTok
+  const simulateTikTokMessage = (text: string) => {
+    if (!ownerTikTok) return;
+    
+    // Log the message and show a toast notification for testing purposes
+    console.log(`[TikTok Test] Message to @${ownerTikTok}: ${text}`);
+    toast.info(`Test: Message to TikTok (@${ownerTikTok})`, {
+      description: text.substring(0, 50) + (text.length > 50 ? '...' : ''),
+      duration: 3000,
+      className: "bg-pink-50 border-pink-200 text-pink-800",
+    });
+    
+    // In a real implementation, this would connect to the TikTok API
+    // to send an actual message to the owner's account
+  };
 
   const closeCalendly = () => {
     setShowCalendly(false);
@@ -188,6 +222,10 @@ export const useChatState = () => {
       if (ownerInstagram) {
         simulateInstagramMessage(followUpMessage.text);
       }
+      
+      if (ownerTikTok) {
+        simulateTikTokMessage(followUpMessage.text);
+      }
     }, 500);
   };
 
@@ -203,7 +241,9 @@ export const useChatState = () => {
     closeCalendly,
     ownerNumber,
     ownerInstagram,
+    ownerTikTok,
     simulateWhatsAppMessage,
-    simulateInstagramMessage
+    simulateInstagramMessage,
+    simulateTikTokMessage
   };
 };
