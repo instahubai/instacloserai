@@ -9,9 +9,9 @@ const PayPalSubscription = () => {
   const handlePayPalCheckout = () => {
     const merchantId = "Af5oSuMKMMZ_LcoBRPMzXir5xWU1C8jm-asrSJfmseajXWC86GFVo_NXr-zm5Au6SSx95KlupTU36gWJ";
     const recipientEmail = "ledefiantones@gmail.com";
-    const amount = "0.00"; // Removed specific price
+    const amount = "0.00"; // Removed price as requested
     const currency = "USD";
-    const description = "Instagram Sales AI Assistant - Monthly Subscription (100 clients)";
+    const description = "InstaCloser AI - Monthly Subscription (100 clients)"; // Updated description
     
     toast.success("Redirecting to PayPal checkout...");
     

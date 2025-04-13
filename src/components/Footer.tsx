@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Instagram, Twitter, Facebook, Mail } from 'lucide-react';
+import { Instagram, Facebook, Mail } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -17,7 +17,7 @@ const Footer = () => {
               <span className="font-heading font-bold text-lg">InstaCloserAI</span>
             </div>
             <p className="text-gray-400 mb-4">
-              Automating Instagram DMs to course sales with the power of AI.
+              Converting social media DMs to sales with the power of AI.
             </p>
             <div className="flex gap-4">
               <a href="https://www.instagram.com/instacloserai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-teal transition-colors">
@@ -81,7 +81,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} InstaCloserAI. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} InstaCloser AI. All rights reserved.</p>
         </div>
       </div>
     </footer>
