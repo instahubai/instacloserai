@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Instagram, Twitter, Facebook, Mail, Tiktok } from 'lucide-react';
+import { Instagram, Twitter, Facebook, Mail } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -24,7 +24,21 @@ const Footer = () => {
                 <Instagram size={20} />
               </a>
               <a href="https://www.tiktok.com/@instacloserai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-teal transition-colors">
-                <Tiktok size={20} />
+                {/* Custom TikTok SVG icon since lucide-react doesn't have a TikTok icon */}
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <path d="M9 12a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+                  <path d="M10 9a8 8 0 0 1 8 8h5a14 14 0 0 0-14-14v6"/>
+                </svg>
               </a>
               <a href="https://www.facebook.com/instacloserai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-teal transition-colors">
                 <Facebook size={20} />
