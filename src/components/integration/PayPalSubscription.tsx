@@ -5,26 +5,9 @@ import { CreditCard } from 'lucide-react';
 import { toast } from "sonner";
 
 const PayPalSubscription = () => {
-  // PayPal checkout handler with merchant ID
-  const handlePayPalCheckout = () => {
-    const merchantId = "Af5oSuMKMMZ_LcoBRPMzXir5xWU1C8jm-asrSJfmseajXWC86GFVo_NXr-zm5Au6SSx95KlupTU36gWJ";
-    const recipientEmail = "ledefiantones@gmail.com";
-    const amount = "0.00"; // Removed price as requested
-    const currency = "USD";
-    const description = "InstaCloser AI - Monthly Subscription (100 clients)"; // Updated description
-    
-    toast.success("Redirecting to PayPal checkout...");
-    
-    try {
-      // Create PayPal checkout URL with merchant ID
-      const paypalCheckoutUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick-subscriptions&business=${encodeURIComponent(recipientEmail)}&item_name=${encodeURIComponent(description)}&a3=${amount}&p3=1&t3=M&src=1&no_shipping=1&no_note=1&currency_code=${currency}&bn=PP-SubscriptionsBF&custom=${merchantId}`;
-      
-      // Redirect to PayPal checkout
-      window.open(paypalCheckoutUrl, "_blank");
-    } catch (error) {
-      toast.error("Failed to open PayPal checkout. Please try again.");
-      console.error("PayPal checkout error:", error);
-    }
+  // Information only component without active PayPal link
+  const handleInfoClick = () => {
+    toast.info("PayPal connection is currently disabled. Please contact support for assistance.");
   };
 
   return (
@@ -37,7 +20,7 @@ const PayPalSubscription = () => {
         Subscribe to our AI assistant service. Handles up to 100 clients automatically through Instagram and WhatsApp.
       </p>
       <Button 
-        onClick={handlePayPalCheckout}
+        onClick={handleInfoClick}
         className="w-full bg-blue-600 hover:bg-blue-700"
       >
         <CreditCard size={16} className="mr-2" />
