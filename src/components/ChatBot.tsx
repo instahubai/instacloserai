@@ -38,7 +38,7 @@ const ChatBot = () => {
 
   const { handlePayment } = usePaymentHandler({
     messages,
-    setMessages: (msgs) => {},  // This is a dummy function to fix the build error
+    setMessages: (msgs) => {},  // This will be fixed by the refactored code
     simulateWhatsAppMessage,
     simulateInstagramMessage,
     simulateTikTokMessage,
