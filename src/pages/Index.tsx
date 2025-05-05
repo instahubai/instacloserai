@@ -12,18 +12,21 @@ import ChatBot from '@/components/ChatBot';
 
 const Index = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main>
-        <Hero />
-        <Features />
-        <HowItWorks />
-        <Testimonials />
-        <IntegrationOptions />
-        <CTA />
-      </main>
-      <Footer />
-      <ChatBot />
+    <div className="flex flex-col min-h-screen bg-cover bg-fixed relative">
+      <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-0"></div>
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Header />
+        <main>
+          <Hero />
+          <Features />
+          <HowItWorks />
+          <Testimonials />
+          <IntegrationOptions />
+          <CTA />
+        </main>
+        <Footer />
+        <ChatBot />
+      </div>
     </div>
   );
 };

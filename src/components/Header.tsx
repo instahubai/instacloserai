@@ -1,5 +1,5 @@
+
 import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
 import { Calendar, X, Menu } from 'lucide-react';
 
 const Header = () => {
@@ -26,7 +26,7 @@ const Header = () => {
   }, [showCalendly]);
 
   return (
-    <header className="w-full py-4 px-6 md:px-8 lg:px-12 border-b sticky top-0 bg-white/90 backdrop-blur-sm z-50">
+    <header className="w-full py-4 px-6 md:px-8 lg:px-12 sticky top-0 z-50 bg-white/90 backdrop-blur-sm">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img 
@@ -38,9 +38,9 @@ const Header = () => {
         </div>
         
         <div className="md:hidden">
-          <Button variant="ghost" size="icon" onClick={toggleMobileMenu}>
+          <button className="p-2" onClick={toggleMobileMenu}>
             <Menu size={24} />
-          </Button>
+          </button>
         </div>
         
         <nav className="hidden md:flex items-center gap-8">
@@ -48,10 +48,10 @@ const Header = () => {
           <a href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">How It Works</a>
           <a href="#testimonials" className="text-sm font-medium hover:text-primary transition-colors">Testimonials</a>
           <a href="https://www.instagram.com/instacloserai" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-primary transition-colors">Follow Us</a>
-          <Button onClick={openCalendly} className="flex items-center gap-2 bg-primary hover:bg-primary/90">
-            <Calendar size={16} />
+          <button onClick={openCalendly} className="modern-button">
+            <Calendar size={18} />
             <span>Start Free Trial</span>
-          </Button>
+          </button>
         </nav>
       </div>
 
@@ -67,19 +67,19 @@ const Header = () => {
                 />
                 <span className="font-heading font-bold text-lg">InstaCloser AI</span>
               </div>
-              <Button variant="ghost" size="icon" onClick={toggleMobileMenu}>
+              <button className="p-2" onClick={toggleMobileMenu}>
                 <X size={24} />
-              </Button>
+              </button>
             </div>
             <nav className="flex flex-col gap-6">
               <a href="#features" className="text-lg font-medium hover:text-primary transition-colors" onClick={toggleMobileMenu}>Features</a>
               <a href="#how-it-works" className="text-lg font-medium hover:text-primary transition-colors" onClick={toggleMobileMenu}>How It Works</a>
               <a href="#testimonials" className="text-lg font-medium hover:text-primary transition-colors" onClick={toggleMobileMenu}>Testimonials</a>
               <a href="https://www.instagram.com/instacloserai" target="_blank" rel="noopener noreferrer" className="text-lg font-medium hover:text-primary transition-colors" onClick={toggleMobileMenu}>Follow Us</a>
-              <Button onClick={() => { openCalendly(); toggleMobileMenu(); }} className="mt-4 w-full">
-                <Calendar size={16} className="mr-2" />
+              <button onClick={() => { openCalendly(); toggleMobileMenu(); }} className="modern-button mt-4">
+                <Calendar size={18} />
                 <span>Start Free Trial</span>
-              </Button>
+              </button>
             </nav>
           </div>
         </div>

@@ -6,11 +6,11 @@ import AIAssistantAvatar from './chat/AIAssistantAvatar';
 
 const Hero = () => {
   return (
-    <section className="py-16 lg:py-24 overflow-hidden relative hero-gradient">
+    <section className="py-16 lg:py-24 overflow-hidden relative">
       <div className="container mx-auto px-6 md:px-8 lg:px-12">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           {/* Left content */}
-          <div className="flex-1">
+          <div className="flex-1 content-overlay">
             <div className="flex items-center gap-3 mb-4">
               <AIAssistantAvatar size="lg" animated={true} />
               <span className="text-lg font-medium text-primary">Meet Nova, your AI assistant</span>
@@ -24,18 +24,14 @@ const Hero = () => {
               Let Nova audit your profile, reply to DMs, and book sales calls while you sleep.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" asChild className="text-lg bg-primary hover:bg-primary/90">
-                <a href="#trial" className="flex items-center gap-2">
-                  Start Free Trial
-                  <ArrowRight size={18} className="ml-2" />
-                </a>
-              </Button>
-              <Button size="lg" variant="outline" asChild className="text-lg border-primary text-primary hover:bg-primary/10">
-                <a href="#demo" className="flex items-center gap-2">
-                  Watch Demo
-                  <ArrowRight size={18} className="ml-2" />
-                </a>
-              </Button>
+              <a href="#trial" className="modern-button">
+                Start Free Trial
+                <ArrowRight size={18} />
+              </a>
+              <a href="#demo" className="modern-button">
+                Watch Demo
+                <ArrowRight size={18} />
+              </a>
             </div>
             
             <div className="mt-8 flex items-center gap-4">
