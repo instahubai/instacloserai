@@ -92,11 +92,6 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background-image: url('/lovable-uploads/6f313b69-41c5-4ab7-9631-9c9d963ce8f9.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -119,7 +114,7 @@
   }
 
   .feature-card {
-    @apply relative overflow-hidden rounded-xl border border-border bg-white/80 backdrop-blur-sm p-6 shadow-sm transition-all hover:shadow-md;
+    @apply relative overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm p-6 shadow-sm transition-all hover:shadow-md;
   }
   
   .bg-instagram-gradient {
@@ -127,7 +122,15 @@
   }
 
   .modern-button {
-    @apply bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 text-lg;
+    @apply bg-gradient-to-r from-[#00f0ff] to-[#ff00ff] hover:from-[#00f0ff]/90 hover:to-[#ff00ff]/90 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 text-lg border border-white/20;
+  }
+
+  .cyberpunk-bg {
+    background-image: url('/lovable-uploads/35c71d2c-c7fa-4811-84ef-71cbe745cb23.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    @apply opacity-80;
   }
 }
 
@@ -149,5 +152,5 @@
 
 /* Add overlay for better text readability against background */
 .content-overlay {
-  @apply bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg;
+  @apply bg-black/50 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/10;
 }
