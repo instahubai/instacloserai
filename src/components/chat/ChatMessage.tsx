@@ -1,40 +1,91 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { CreditCard } from 'lucide-react';
+import { Calendar, Instagram, MessageSquare } from "lucide-react";
 import { Message } from '@/types/chat';
+import AIAssistantAvatar from './AIAssistantAvatar';
 
 interface ChatMessageProps {
   message: Message;
-  handlePayment: () => void;
+  handlePayment?: () => void;
 }
 
 const ChatMessage = ({ message, handlePayment }: ChatMessageProps) => {
+  const isBot = message.sender === 'bot';
+  
+  // Format payment link for display
+  const formatMessageText = (text: string) => {
+    return text.includes('payment link') 
+      ? text.replace('payment link', '<span class="text-primary font-semibold">payment link</span>')
+      : text;
+  };
+  
   return (
-    <div 
-      className={`mb-3 ${message.sender === 'user' ? 'ml-auto' : 'mr-auto'} max-w-[85%]`}
-    >
-      <div 
-        className={`p-3 rounded-lg ${
-          message.sender === 'user' 
-            ? 'bg-blue-600 text-white rounded-br-none' 
-            : 'bg-gray-100 text-gray-800 rounded-bl-none'
-        }`}
-      >
-        {message.text.includes('<button-payment>') ? (
-          <Button 
-            onClick={handlePayment}
-            className="w-full bg-green-600 hover:bg-green-700"
-          >
-            <CreditCard size={16} className="mr-2" />
-            Pay Now
-          </Button>
-        ) : (
-          message.text
+    <div className={`flex ${isBot ? 'justify-start' : 'justify-end'} mb-3`}>
+      {isBot && (
+        <div className="mr-2 flex-shrink-0 self-end mb-1">
+          <AIAssistantAvatar size="sm" />
+        </div>
+      )}
+      
+      <div className={`max-w-[85%]`}>
+        <div className={`p-3 rounded-lg ${
+          isBot 
+            ? 'bg-gray-100 text-gray-800 rounded-bl-none' 
+            : 'bg-primary text-white rounded-br-none'
+        }`}>
+          <div 
+            dangerouslySetInnerHTML={{ 
+              __html: formatMessageText(message.text) 
+            }}
+          />
+
+          {/* Show buttons for specific bot messages */}
+          {isBot && message.text.includes('available times') && (
+            <div className="mt-2">
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="bg-white text-primary border-primary mr-2"
+                onClick={handlePayment}
+              >
+                <Calendar size={14} className="mr-1" />
+                Schedule Call
+              </Button>
+            </div>
+          )}
+          
+          {/* Payment button */}
+          {isBot && message.text.includes('secure connection link') && (
+            <div className="mt-2">
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="bg-white text-primary border-primary"
+                onClick={handlePayment}
+              >
+                Complete Setup
+              </Button>
+            </div>
+          )}
+        </div>
+        
+        {/* Add message source indicator */}
+        {isBot && message.source && (
+          <div className="flex items-center text-xs text-gray-500 mt-1">
+            {message.source === 'instagram' ? (
+              <>
+                <Instagram size={12} className="mr-1" />
+                <span>via Instagram</span>
+              </>
+            ) : (
+              <>
+                <MessageSquare size={12} className="mr-1" />
+                <span>Chat</span>
+              </>
+            )}
+          </div>
         )}
-      </div>
-      <div className={`text-xs text-gray-500 mt-1 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
-        {message.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
       </div>
     </div>
   );

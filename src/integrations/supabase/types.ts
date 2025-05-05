@@ -9,7 +9,220 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      advertisements: {
+        Row: {
+          clicks: number | null
+          cost: number
+          created_at: string | null
+          creator_id: string | null
+          end_date: string
+          id: string
+          impressions: number | null
+          placement: string
+          project_id: string | null
+          start_date: string
+          status: string | null
+        }
+        Insert: {
+          clicks?: number | null
+          cost: number
+          created_at?: string | null
+          creator_id?: string | null
+          end_date: string
+          id?: string
+          impressions?: number | null
+          placement: string
+          project_id?: string | null
+          start_date: string
+          status?: string | null
+        }
+        Update: {
+          clicks?: number | null
+          cost?: number
+          created_at?: string | null
+          creator_id?: string | null
+          end_date?: string
+          id?: string
+          impressions?: number | null
+          placement?: string
+          project_id?: string | null
+          start_date?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "advertisements_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "advertisements_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      developer_requests: {
+        Row: {
+          company_name: string
+          created_at: string
+          email: string
+          id: string
+          message: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          company_name: string
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          company_name?: string
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          base_price: number
+          category: string
+          created_at: string | null
+          creator_id: string | null
+          description: string
+          id: string
+          image_url: string | null
+          is_featured: boolean | null
+          listing_fee: number
+          name: string
+          pricing_model: string
+          status: string | null
+          updated_at: string | null
+          website_url: string | null
+        }
+        Insert: {
+          base_price: number
+          category: string
+          created_at?: string | null
+          creator_id?: string | null
+          description: string
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean | null
+          listing_fee?: number
+          name: string
+          pricing_model: string
+          status?: string | null
+          updated_at?: string | null
+          website_url?: string | null
+        }
+        Update: {
+          base_price?: number
+          category?: string
+          created_at?: string | null
+          creator_id?: string | null
+          description?: string
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean | null
+          listing_fee?: number
+          name?: string
+          pricing_model?: string
+          status?: string | null
+          updated_at?: string | null
+          website_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      referrals: {
+        Row: {
+          commission: number | null
+          converted_at: string | null
+          created_at: string | null
+          id: string
+          referred_email: string
+          referrer_id: string | null
+          status: string | null
+        }
+        Insert: {
+          commission?: number | null
+          converted_at?: string | null
+          created_at?: string | null
+          id?: string
+          referred_email: string
+          referrer_id?: string | null
+          status?: string | null
+        }
+        Update: {
+          commission?: number | null
+          converted_at?: string | null
+          created_at?: string | null
+          id?: string
+          referred_email?: string
+          referrer_id?: string | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_referrer_id_fkey"
+            columns: ["referrer_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          avatar_url: string | null
+          company_name: string | null
+          created_at: string | null
+          email: string
+          full_name: string | null
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          email: string
+          full_name?: string | null
+          id: string
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          email?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

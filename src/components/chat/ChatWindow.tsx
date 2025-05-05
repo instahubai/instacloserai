@@ -1,10 +1,11 @@
 
 import React, { useRef, useEffect } from 'react';
-import { Bot, Instagram, CreditCard, X } from 'lucide-react';
+import { X, CreditCard } from 'lucide-react';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import { Message } from '@/types/chat';
 import CalendlyModal from './CalendlyModal';
+import AIAssistantAvatar from './AIAssistantAvatar';
 
 interface ChatWindowProps {
   isOpen: boolean;
@@ -44,29 +45,15 @@ const ChatWindow = ({
     <>
       <div className="fixed bottom-24 right-6 w-80 sm:w-96 h-[500px] bg-white rounded-xl shadow-xl z-40 flex flex-col border border-gray-200">
         {/* Chat Header */}
-        <div className="px-4 py-3 bg-blue-600 text-white rounded-t-xl flex items-center justify-between">
+        <div className="px-4 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-t-xl flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Bot size={20} />
-            <span className="font-medium">InstaCloserAI Assistant</span>
+            <AIAssistantAvatar size="sm" />
+            <span className="font-medium">Nova - InstaCloser AI</span>
           </div>
-          <div className="flex items-center gap-1">
-            <Instagram size={16} className="opacity-70" />
-            <CreditCard size={16} className="opacity-70" />
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="16" 
-              height="16" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-              className="opacity-70"
-            >
-              <path d="M9 12a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
-              <path d="M10 9a8 8 0 0 1 8 8h5a14 14 0 0 0-14-14v6"/>
-            </svg>
+          <div className="flex items-center gap-2">
+            <button className="text-white opacity-70 hover:opacity-100 transition-opacity">
+              <X size={18} onClick={closeCalendly} />
+            </button>
           </div>
         </div>
         
