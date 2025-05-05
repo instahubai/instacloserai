@@ -4,6 +4,6 @@ export interface Message {
   text: string;
   sender: 'user' | 'bot';
   source?: 'whatsapp' | 'instagram' | 'tiktok' | 'chat';
-  createdAt: Date | number;
+  createdAt: number;
   timestamp?: number;
 }
