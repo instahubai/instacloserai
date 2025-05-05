@@ -11,12 +11,17 @@ const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           {/* Left content */}
           <div className="flex-1">
+            <div className="flex items-center gap-3 mb-4">
+              <AIAssistantAvatar size="lg" animated={true} />
+              <span className="text-lg font-medium text-primary">Meet Nova, your AI assistant</span>
+            </div>
+            
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold leading-tight mb-6">
               Turn Instagram DMs into Course Sales
               <span className="gradient-text"> Automatically.</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-8">
-              Let Nova, our AI assistant, audit your profile, reply to DMs, and book sales calls while you sleep.
+              Let Nova audit your profile, reply to DMs, and book sales calls while you sleep.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" asChild className="text-lg bg-primary hover:bg-primary/90">
@@ -63,12 +68,7 @@ const Hero = () => {
             
             {/* Nova AI Assistant */}
             <div className="absolute -top-20 right-20 lg:right-0 w-32 h-32 md:w-40 md:h-40 z-10">
-              <img 
-                src="/lovable-uploads/6f313b69-41c5-4ab7-9631-9c9d963ce8f9.png" 
-                alt="Nova AI Assistant" 
-                className="w-full h-full object-contain drop-shadow-lg animate-float"
-                style={{ animationDelay: "0.5s" }}
-              />
+              <AIAssistantAvatar size="lg" animated={true} />
               <div className="absolute -right-4 -top-4 bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold px-2 py-1 rounded-full">
                 Nova AI
               </div>
@@ -90,7 +90,7 @@ const Hero = () => {
             </div>
             
             {/* AI Response */}
-            <div className="bg-gray-100 rounded-xl shadow-lg p-4 mb-4 ml-12 max-w-xs animate-float" style={{ animationDelay: "1s" }}>
+            <div className="bg-white rounded-xl shadow-lg p-4 mb-4 ml-12 max-w-xs animate-float" style={{ animationDelay: "1s" }}>
               <div className="flex items-center gap-2 mb-3">
                 <AIAssistantAvatar size="sm" />
                 <div>

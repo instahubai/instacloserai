@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Calendar, Instagram, MessageSquare } from "lucide-react";
+import { Calendar, Instagram, MessageSquare, MessageCircle } from "lucide-react";
 import { Message } from '@/types/chat';
 import AIAssistantAvatar from './AIAssistantAvatar';
 
@@ -21,9 +21,9 @@ const ChatMessage = ({ message, handlePayment }: ChatMessageProps) => {
   };
   
   return (
-    <div className={`flex ${isBot ? 'justify-start' : 'justify-end'} mb-3`}>
+    <div className={`flex ${isBot ? 'justify-start' : 'justify-end'} mb-4`}>
       {isBot && (
-        <div className="mr-2 flex-shrink-0 self-end mb-1">
+        <div className="mr-2 flex-shrink-0 self-start">
           <AIAssistantAvatar size="sm" />
         </div>
       )}
@@ -31,22 +31,23 @@ const ChatMessage = ({ message, handlePayment }: ChatMessageProps) => {
       <div className={`max-w-[85%]`}>
         <div className={`p-3 rounded-lg ${
           isBot 
-            ? 'bg-gray-100 text-gray-800 rounded-bl-none' 
+            ? 'bg-white shadow-sm text-gray-800 rounded-bl-none' 
             : 'bg-primary text-white rounded-br-none'
         }`}>
           <div 
             dangerouslySetInnerHTML={{ 
               __html: formatMessageText(message.text) 
             }}
+            className="text-sm"
           />
 
           {/* Show buttons for specific bot messages */}
           {isBot && message.text.includes('available times') && (
-            <div className="mt-2">
+            <div className="mt-3">
               <Button 
                 size="sm" 
                 variant="outline" 
-                className="bg-white text-primary border-primary mr-2"
+                className="bg-white text-primary border-primary mr-2 text-xs"
                 onClick={handlePayment}
               >
                 <Calendar size={14} className="mr-1" />
@@ -57,11 +58,11 @@ const ChatMessage = ({ message, handlePayment }: ChatMessageProps) => {
           
           {/* Payment button */}
           {isBot && message.text.includes('secure connection link') && (
-            <div className="mt-2">
+            <div className="mt-3">
               <Button 
                 size="sm" 
                 variant="outline" 
-                className="bg-white text-primary border-primary"
+                className="bg-white text-primary border-primary text-xs"
                 onClick={handlePayment}
               >
                 Complete Setup
@@ -77,6 +78,16 @@ const ChatMessage = ({ message, handlePayment }: ChatMessageProps) => {
               <>
                 <Instagram size={12} className="mr-1" />
                 <span>via Instagram</span>
+              </>
+            ) : message.source === 'whatsapp' ? (
+              <>
+                <MessageCircle size={12} className="mr-1" />
+                <span>via WhatsApp</span>
+              </>
+            ) : message.source === 'tiktok' ? (
+              <>
+                <MessageSquare size={12} className="mr-1" />
+                <span>via TikTok</span>
               </>
             ) : (
               <>

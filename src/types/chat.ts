@@ -3,7 +3,6 @@ export interface Message {
   id: string;
   text: string;
   sender: 'user' | 'bot';
-  timestamp: Date;
-  recipient?: string; // Optional field to specify where the message should be sent
-  platform?: 'whatsapp' | 'instagram' | 'web'; // Optional field to specify the platform
+  source?: 'whatsapp' | 'instagram' | 'tiktok' | 'chat';
+  createdAt: Date;
 }

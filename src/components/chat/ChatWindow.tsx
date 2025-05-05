@@ -47,8 +47,11 @@ const ChatWindow = ({
         {/* Chat Header */}
         <div className="px-4 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-t-xl flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <AIAssistantAvatar size="sm" />
-            <span className="font-medium">Nova - InstaCloser AI</span>
+            <AIAssistantAvatar size="sm" animated={true} />
+            <div>
+              <span className="font-medium">Nova</span>
+              <p className="text-xs text-white/80">InstaCloser AI Assistant</p>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <button className="text-white opacity-70 hover:opacity-100 transition-opacity">
@@ -58,7 +61,7 @@ const ChatWindow = ({
         </div>
         
         {/* Messages Area */}
-        <div className="flex-1 p-4 overflow-y-auto">
+        <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
           {messages.map((message) => (
             <ChatMessage 
               key={message.id} 
@@ -70,11 +73,14 @@ const ChatWindow = ({
           {/* Typing indicator */}
           {typing && (
             <div className="mb-3 mr-auto max-w-[85%]">
-              <div className="p-3 rounded-lg bg-gray-100 text-gray-800 rounded-bl-none">
-                <div className="flex space-x-1">
-                  <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              <div className="flex items-start gap-2">
+                <AIAssistantAvatar size="sm" />
+                <div className="p-3 rounded-lg bg-white shadow-sm text-gray-800 rounded-bl-none">
+                  <div className="flex space-x-1">
+                    <div className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                    <div className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                    <div className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  </div>
                 </div>
               </div>
             </div>
